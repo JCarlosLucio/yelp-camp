@@ -15,6 +15,10 @@ app.get('/campgrounds', (req, res) => {
     res.render('campgrounds', {campgrounds: campgrounds});
 });
 
+app.post('/campgrounds', (req, res) => {
+    res.send('HIT POST ROUTE');
+});
+
 app.listen(3000, () => {
     console.log('Started yelp-camp server');
 });
