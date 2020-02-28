@@ -25,6 +25,7 @@ app.post('/campgrounds', (req, res) => {
     let image = req.body.image;
     let newCampground = { name: name, image: image };
     campgrounds.push(newCampground);
+    res.redirect('/campgrounds');
 });
 
 app.listen(3000, () => {
