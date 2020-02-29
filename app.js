@@ -6,6 +6,12 @@ const campgrounds = [ //Temporary
     { name: 'Honey Badger Creek', image: 'https://source.unsplash.com/iZ4yhyDB-dQ' },
     { name: 'Sleepy Bear Hill', image: 'https://source.unsplash.com/Hxs6EAdI2Q8' },
     { name: 'Winter Fox Lake', image: 'https://source.unsplash.com/Czw5tWFGNOI' },
+    { name: 'Honey Badger Creek', image: 'https://source.unsplash.com/iZ4yhyDB-dQ' },
+    { name: 'Sleepy Bear Hill', image: 'https://source.unsplash.com/Hxs6EAdI2Q8' },
+    { name: 'Winter Fox Lake', image: 'https://source.unsplash.com/Czw5tWFGNOI' },
+    { name: 'Honey Badger Creek', image: 'https://source.unsplash.com/iZ4yhyDB-dQ' },
+    { name: 'Sleepy Bear Hill', image: 'https://source.unsplash.com/Hxs6EAdI2Q8' },
+    { name: 'Winter Fox Lake', image: 'https://source.unsplash.com/Czw5tWFGNOI' },
 ];
 
 app.use(bodyParser.urlencoded({ extended: true }));
