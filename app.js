@@ -25,17 +25,17 @@ const campgroundSchema = new mongoose.Schema({
 const Campground = mongoose.model('Campground', campgroundSchema);
 
 // ADD Campground
-Campground.create({
-    name: 'Rabbit Hop Valley',
-    image: 'https://source.unsplash.com/Hxs6EAdI2Q8',
-    description: 'This is a huge valley, no bathrooms. No water. Beautiful trees!'
-}, (err, campground) => {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log(`NEWLY CREATED CAMPGROUND: ${campground}`);
-    };
-});
+// Campground.create({
+//     name: 'Rabbit Hop Valley',
+//     image: 'https://source.unsplash.com/Hxs6EAdI2Q8',
+//     description: 'This is a huge valley, no bathrooms. No water. Beautiful trees!'
+// }, (err, campground) => {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log(`NEWLY CREATED CAMPGROUND: ${campground}`);
+//     };
+// });
 
 // RESTFUL ROUTES
 // name      url                 verb       description
@@ -82,11 +82,11 @@ app.get('/campgrounds/new', (req, res) => {
     res.render('new');
 });
 
-// SHOW - Shows infor about one campground
+// SHOW - Shows more info about one campground
 app.get('/campgrounds/:id', (req, res) => {
     // find the campground with provided ID
     // render show template with that campground
-    res.send('THIS WILL BE THE SHOW PAGE LOL');
+    res.render('show');
 });
 
 //SERVER
