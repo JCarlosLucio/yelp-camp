@@ -19,9 +19,23 @@ app.set('view engine', 'ejs');
 // SCHEMA SETUP
 const campgroundSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 });
 const Campground = mongoose.model('Campground', campgroundSchema);
+
+// ADD Campground
+Campground.create({
+    name: 'Rabbit Hop Valley',
+    image: 'https://source.unsplash.com/Hxs6EAdI2Q8',
+    description: 'This is a huge valley, no bathrooms. No water. Beautiful trees!'
+}, (err, campground) => {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log(`NEWLY CREATED CAMPGROUND: ${campground}`);
+    };
+});
 
 // RESTFUL ROUTES
 // name      url                 verb       description
