@@ -1,7 +1,7 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const express    = require('express'),
+      app        = express(),
+      bodyParser = require('body-parser'),
+      mongoose   = require('mongoose');
 
 const campgrounds = [ //Temporary
     { name: 'Honey Badger Creek', image: 'https://source.unsplash.com/iZ4yhyDB-dQ' },
@@ -15,11 +15,18 @@ const campgrounds = [ //Temporary
     { name: 'Winter Fox Lake', image: 'https://source.unsplash.com/Czw5tWFGNOI' },
 ];
 
+//DB CONNECT W/MONGOOSE
 mongoose.set('useUnifiedTopology', true);
 mongoose.connect('mongodb://localhost:27017/yelp_camp', { useNewUrlParser: true })
     .catch((err) => {
         console.error('CONNECTION ERROR: ', err);
     });
+
+// BODY PARSER
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// EJS
+app.set('view engine', 'ejs');
 
 // SCHEMA SETUP
 const campgroundSchema = new mongoose.Schema({
@@ -28,9 +35,7 @@ const campgroundSchema = new mongoose.Schema({
 });
 const Campground = mongoose.model('Campground', campgroundSchema);
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.set('view engine', 'ejs');
-
+//ROUTES
 app.get('/', (req, res) => {
     res.render('landing');
 });
@@ -48,6 +53,7 @@ app.post('/campgrounds', (req, res) => {
     res.redirect('/campgrounds');
 });
 
+//SERVER
 app.listen(3000, () => {
     console.log('Started yelp-camp server');
 });
