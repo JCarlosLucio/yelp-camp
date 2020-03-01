@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const campgrounds = [ //Temporary
     { name: 'Honey Badger Creek', image: 'https://source.unsplash.com/iZ4yhyDB-dQ' },
@@ -13,6 +14,12 @@ const campgrounds = [ //Temporary
     { name: 'Sleepy Bear Hill', image: 'https://source.unsplash.com/Hxs6EAdI2Q8' },
     { name: 'Winter Fox Lake', image: 'https://source.unsplash.com/Czw5tWFGNOI' },
 ];
+
+mongoose.set('useUnifiedTopology', true);
+mongoose.connect('mongodb://localhost:27017/cat_app', { useNewUrlParser: true })
+    .catch((err) => {
+        console.error('CONNECTION ERROR: ', err);
+    });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
