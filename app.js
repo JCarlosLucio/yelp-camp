@@ -1,19 +1,7 @@
-const express    = require('express'),
-      app        = express(),
-      bodyParser = require('body-parser'),
-      mongoose   = require('mongoose');
-
-const campgrounds = [ //Temporary
-    { name: 'Honey Badger Creek', image: 'https://source.unsplash.com/iZ4yhyDB-dQ' },
-    { name: 'Sleepy Bear Hill', image: 'https://source.unsplash.com/Hxs6EAdI2Q8' },
-    { name: 'Winter Fox Lake', image: 'https://source.unsplash.com/Czw5tWFGNOI' },
-    { name: 'Honey Badger Creek', image: 'https://source.unsplash.com/iZ4yhyDB-dQ' },
-    { name: 'Sleepy Bear Hill', image: 'https://source.unsplash.com/Hxs6EAdI2Q8' },
-    { name: 'Winter Fox Lake', image: 'https://source.unsplash.com/Czw5tWFGNOI' },
-    { name: 'Honey Badger Creek', image: 'https://source.unsplash.com/iZ4yhyDB-dQ' },
-    { name: 'Sleepy Bear Hill', image: 'https://source.unsplash.com/Hxs6EAdI2Q8' },
-    { name: 'Winter Fox Lake', image: 'https://source.unsplash.com/Czw5tWFGNOI' },
-];
+const express = require('express'),
+    app = express(),
+    bodyParser = require('body-parser'),
+    mongoose = require('mongoose');
 
 //DB CONNECT W/MONGOOSE
 mongoose.set('useUnifiedTopology', true);
@@ -28,12 +16,37 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // EJS
 app.set('view engine', 'ejs');
 
+//Temporary 
+const campgrounds = [
+    { name: 'Honey Badger Creek', image: 'https://source.unsplash.com/iZ4yhyDB-dQ' },
+    { name: 'Sleepy Bear Hill', image: 'https://source.unsplash.com/Hxs6EAdI2Q8' },
+    { name: 'Winter Fox Lake', image: 'https://source.unsplash.com/Czw5tWFGNOI' },
+    { name: 'Honey Badger Creek', image: 'https://source.unsplash.com/iZ4yhyDB-dQ' },
+    { name: 'Sleepy Bear Hill', image: 'https://source.unsplash.com/Hxs6EAdI2Q8' },
+    { name: 'Winter Fox Lake', image: 'https://source.unsplash.com/Czw5tWFGNOI' },
+    { name: 'Honey Badger Creek', image: 'https://source.unsplash.com/iZ4yhyDB-dQ' },
+    { name: 'Sleepy Bear Hill', image: 'https://source.unsplash.com/Hxs6EAdI2Q8' },
+    { name: 'Winter Fox Lake', image: 'https://source.unsplash.com/Czw5tWFGNOI' },
+];
+
 // SCHEMA SETUP
 const campgroundSchema = new mongoose.Schema({
     name: String,
     image: String
 });
 const Campground = mongoose.model('Campground', campgroundSchema);
+
+// ADD CAMPGROUND
+Campground.create({
+    name: 'Honey Badger Creek',
+    image: 'https://source.unsplash.com/iZ4yhyDB-dQ'
+}, (err, campground) => {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log(`NEWLY CREATEDCAMPGROUND: ${campground}`);
+    };
+});
 
 //ROUTES
 app.get('/', (req, res) => {
