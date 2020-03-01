@@ -68,6 +68,13 @@ app.get('/campgrounds/new', (req, res) => {
     res.render('new');
 });
 
+// SHOW - Shows infor about one campground
+app.get('/campgrounds/:id', (req, res) => {
+    // find the campground with provided ID
+    // render show template with that campground
+    res.send('THIS WILL BE THE SHOW PAGE LOL');
+});
+
 //SERVER
 app.listen(3000, () => {
     console.log('Started yelp-camp server');
