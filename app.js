@@ -37,16 +37,16 @@ const campgroundSchema = new mongoose.Schema({
 const Campground = mongoose.model('Campground', campgroundSchema);
 
 // ADD CAMPGROUND
-Campground.create({
-    name: 'Sleepy Bear Hill',
-    image: 'https://source.unsplash.com/Hxs6EAdI2Q8'
-}, (err, campground) => {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log(`NEWLY CREATEDCAMPGROUND: ${campground}`);
-    };
-});
+// Campground.create({
+//     name: 'Sleepy Bear Hill',
+//     image: 'https://source.unsplash.com/Hxs6EAdI2Q8'
+// }, (err, campground) => {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log(`NEWLY CREATED CAMPGROUND: ${campground}`);
+//     };
+// });
 
 //ROUTES
 app.get('/', (req, res) => {
@@ -65,11 +65,19 @@ app.get('/campgrounds/new', (req, res) => {
     res.render('new');
 });
 app.post('/campgrounds', (req, res) => {
+    //get data from form and add to campgrounds array
     let name = req.body.name;
     let image = req.body.image;
     let newCampground = { name: name, image: image };
-    campgrounds.push(newCampground);
-    res.redirect('/campgrounds');
+    //create a new campground and save to DB
+    Campground.create(newCampground, (err, newlyCreated) => {
+        if (err) {
+            console.log(err);
+        } else {
+            //redirect to campground page
+            res.redirect('/campgrounds');
+        };
+    });
 });
 
 //SERVER
