@@ -55,7 +55,7 @@ app.get('/campgrounds', (req, res) => {
         if (err) {
             console.log('OH NO, ERROR!', err);
         } else {
-            res.render('campgrounds', { campgrounds: allCampgrounds });
+            res.render('index', { campgrounds: allCampgrounds });
         }
     });
 });
