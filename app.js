@@ -16,10 +16,17 @@ const campgrounds = [ //Temporary
 ];
 
 mongoose.set('useUnifiedTopology', true);
-mongoose.connect('mongodb://localhost:27017/cat_app', { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost:27017/yelp_camp', { useNewUrlParser: true })
     .catch((err) => {
         console.error('CONNECTION ERROR: ', err);
     });
+
+// SCHEMA SETUP
+const campgroundSchema = new mongoose.Schema({
+    name: String,
+    image: String
+});
+const Campground = mongoose.model('Campground', campgroundSchema);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
