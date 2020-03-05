@@ -1,7 +1,8 @@
 const express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    Campground = require('./models/campground');
 
 //DB CONNECT W/MONGOOSE
 mongoose.set('useUnifiedTopology', true);
@@ -15,14 +16,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // EJS
 app.set('view engine', 'ejs');
-
-// SCHEMA SETUP
-const campgroundSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-const Campground = mongoose.model('Campground', campgroundSchema);
 
 // ADD Campground
 // Campground.create({
