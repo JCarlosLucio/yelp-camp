@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Campground = require('./models/campground');
 const Comment = require('./models/comment');
-const data = [
+const seeds = [
     {
         name: 'Honey Badger Creek',
         image: 'https://source.unsplash.com/iZ4yhyDB-dQ',
@@ -19,47 +19,25 @@ const data = [
     }
 ];
 
-function seedDB() {
-    // Remove all comments
-    Comment.remove({}, (err) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('removed comments');
-            // Remove all campgrounds
-            Campground.remove({}, (err) => {
-                if (err) {
-                    console.error(err);
-                } else {
-                    console.log('removed campgrounds');
-                    // Add a few campgrounds
-                    data.forEach((seed) => {
-                        Campground.create(seed, (err, campground) => {
-                            if (err) {
-                                console.error(err);
-                            } else {
-                                console.log('added campground');
-                                // Add a few comments
-                                Comment.create(
-                                    {
-                                        text: 'This place is great but I wish there was Internet!',
-                                        author: 'Homer'
-                                    }, (err, comment) => {
-                                        if (err) {
-                                            console.error(err);
-                                        } else {
-                                            campground.comments.push(comment);
-                                            campground.save();
-                                            console.log('Created new comment');
-                                        };
-                                    }
-                                );
-                            };
-                        });
-                    });
-                };
-            });
-        };
-    })
+async function seedDB() {
+    await Campground.remove({});
+    console.log('campgrounds removed');
+    await Comment.remove({});
+    console.log('comments removed');
+    for (const seed of seeds) {
+        let campground = await Campground.create(seed);
+        console.log('campground created');
+        let comment = await Comment.create(
+            {
+                text: 'This place is great but I wish there was Internet!',
+                author: 'Homer'
+            }
+        );
+        console.log('comment created');
+        campground.comments.push(comment);
+        campground.save();
+        console.log('comment added to campground');
+    };
 };
+
 module.exports = seedDB;
