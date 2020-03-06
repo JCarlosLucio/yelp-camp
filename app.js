@@ -42,7 +42,7 @@ app.get('/campgrounds', (req, res) => {
         if (err) {
             console.log('OH NO, ERROR!', err);
         } else {
-            res.render('index', { campgrounds: allCampgrounds });
+            res.render('campgrounds/index', { campgrounds: allCampgrounds });
         }
     });
 });
@@ -67,7 +67,7 @@ app.post('/campgrounds', (req, res) => {
 
 // NEW - Show form to create new campground
 app.get('/campgrounds/new', (req, res) => {
-    res.render('new');
+    res.render('campgrounds/new');
 });
 
 // SHOW - Shows more info about one campground
@@ -79,7 +79,7 @@ app.get('/campgrounds/:id', (req, res) => {
         } else {
             console.log(foundCampground);
             // render show template with that campground
-            res.render('show', { campground: foundCampground });
+            res.render('campgrounds/show', { campground: foundCampground });
         };
     });
 });
@@ -90,7 +90,7 @@ app.get('/campgrounds/:id', (req, res) => {
 
 // NEW COMMENT - Display form to make a new comment
 app.get('/campgrounds/:id/comments/new', (req, res) => {
-    res.send('new');
+    res.send('comments/new');
 });
 
 //SERVER
