@@ -6,21 +6,21 @@ const express = require('express'),
     Comment = require('./models/comment'),
     seedDB = require('./seeds');
 
-// SEEDDB
-seedDB();
-
 //DB CONNECT W/MONGOOSE
 mongoose.set('useUnifiedTopology', true);
 mongoose.connect('mongodb://localhost:27017/yelp_camp', { useNewUrlParser: true })
     .catch((err) => {
         console.error('CONNECTION ERROR: ', err);
     });
-
 // BODY PARSER
 app.use(bodyParser.urlencoded({ extended: true }));
-
 // EJS
 app.set('view engine', 'ejs');
+// CUSTOM CSS
+app.use(express.static(__dirname + '/public'));
+
+// SEEDDB
+seedDB();
 
 // RESTFUL ROUTES
 // name      url                 verb       description
@@ -91,7 +91,7 @@ app.get('/campgrounds/:id', (req, res) => {
 
 // NEW COMMENT - Display form to make a new comment
 app.get('/campgrounds/:id/comments/new', (req, res) => {
-    // find ccampground by id 
+    // find campground by id 
     Campground.findById(req.params.id, (err, campground) => {
         if (err) {
             console.log(err);
