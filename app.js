@@ -3,6 +3,7 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     Campground = require('./models/campground'),
+    Comment = require('./models/comment'),
     seedDB = require('./seeds');
 
 // SEEDDB
@@ -97,6 +98,31 @@ app.get('/campgrounds/:id/comments/new', (req, res) => {
         } else {
             // render comments/new with campground data
             res.render('comments/new', { campground: campground });
+        };
+    });
+});
+
+// CREATE COMMENT - Add new comment to campground/:id
+app.post('/campgrounds/:id/comments', (req, res) => {
+    // look up using id
+    Campground.findById(req.params.id, (err, campground) => {
+        if (err) {
+            console.log(err);
+            res.redirect('/campgrounds');
+        } else {
+            // create new comment
+            Comment.create(req.body.comment, (err, comment) => {
+                if (err) {
+                    console.error(err);
+                } else {
+                    // connect new comment to campground
+                    campground.comments.push(comment);
+                    campground.save();
+                    console.log('Created NEW comment');
+                    // redirect to campground show page
+                    res.redirect(`/campgrounds/${campground._id}`);
+                };
+            });
         };
     });
 });
