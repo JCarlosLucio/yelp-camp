@@ -20,38 +20,46 @@ const data = [
 ];
 
 function seedDB() {
-    // Remove all campgrounds
-    Campground.remove({}, (err) => {
+    // Remove all comments
+    Comment.remove({}, (err) => {
         if (err) {
-            console.error(err);
+            console.log(err);
         } else {
-            console.log('removed campgrounds');
-            // Add a few campgrounds
-            data.forEach((seed) => {
-                Campground.create(seed, (err, campground) => {
-                    if (err) {
-                        console.error(err);
-                    } else {
-                        console.log('added campground');
-                        // Add a few comments
-                        Comment.create(
-                            {
-                                text: 'This place is great but I wish there was Intenet!',
-                                author: 'Homer'
-                            }, (err, comment) => {
-                                if (err) {
-                                    console.error(err);
-                                } else {
-                                    campground.comments.push(comment);
-                                    campground.save();
-                                    console.log('Created new comment');
-                                };
-                            }
-                        );
-                    };
-                });
+            console.log('removed comments');
+            // Remove all campgrounds
+            Campground.remove({}, (err) => {
+                if (err) {
+                    console.error(err);
+                } else {
+                    console.log('removed campgrounds');
+                    // Add a few campgrounds
+                    data.forEach((seed) => {
+                        Campground.create(seed, (err, campground) => {
+                            if (err) {
+                                console.error(err);
+                            } else {
+                                console.log('added campground');
+                                // Add a few comments
+                                Comment.create(
+                                    {
+                                        text: 'This place is great but I wish there was Internet!',
+                                        author: 'Homer'
+                                    }, (err, comment) => {
+                                        if (err) {
+                                            console.error(err);
+                                        } else {
+                                            campground.comments.push(comment);
+                                            campground.save();
+                                            console.log('Created new comment');
+                                        };
+                                    }
+                                );
+                            };
+                        });
+                    });
+                };
             });
         };
-    });
+    })
 };
 module.exports = seedDB;
