@@ -90,7 +90,15 @@ app.get('/campgrounds/:id', (req, res) => {
 
 // NEW COMMENT - Display form to make a new comment
 app.get('/campgrounds/:id/comments/new', (req, res) => {
-    res.render('comments/new');
+    // find ccampground by id 
+    Campground.findById(req.params.id, (err, campground) => {
+        if (err) {
+            console.log(err);
+        } else {
+            // render comments/new with campground data
+            res.render('comments/new', { campground: campground });
+        };
+    });
 });
 
 //SERVER
