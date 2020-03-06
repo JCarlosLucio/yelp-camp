@@ -21,19 +21,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // EJS
 app.set('view engine', 'ejs');
 
-// ADD Campground
-// Campground.create({
-//     name: 'Rabbit Hop Valley',
-//     image: 'https://source.unsplash.com/Hxs6EAdI2Q8',
-//     description: 'This is a huge valley, no bathrooms. No water. Beautiful trees!'
-// }, (err, campground) => {
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         console.log(`NEWLY CREATED CAMPGROUND: ${campground}`);
-//     };
-// });
-
 // RESTFUL ROUTES
 // name      url                 verb       description
 //=========================================================================
