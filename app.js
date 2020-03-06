@@ -28,6 +28,9 @@ app.set('view engine', 'ejs');
 // NEW      /campgrounds/new     GET      Display form to make a new campground
 // CREATE   /campgrounds         POST     Add new campground to DB
 // SHOW     /campgrounds/:id     GET      Shows info about one campground
+// NESTED ROUTES
+//         /campgrounds/:id/comments/new    GET      Display form to make a new comment
+//         /campgrounds/:id/comments/       POST     Add new comment to campground/:id
 
 app.get('/', (req, res) => {
     res.render('landing');
