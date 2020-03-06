@@ -84,6 +84,15 @@ app.get('/campgrounds/:id', (req, res) => {
     });
 });
 
+// ========================================
+//              COMMENTS ROUTES
+// ========================================
+
+// NEW COMMENT - Display form to make a new comment
+app.get('/campgrounds/:id/comments/new', (req, res) => {
+    res.send('new');
+});
+
 //SERVER
 app.listen(3000, () => {
     console.log('Started yelp-camp server');
