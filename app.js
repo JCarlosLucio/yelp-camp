@@ -90,7 +90,7 @@ app.get('/campgrounds/:id', (req, res) => {
 
 // NEW COMMENT - Display form to make a new comment
 app.get('/campgrounds/:id/comments/new', (req, res) => {
-    res.send('comments/new');
+    res.render('comments/new');
 });
 
 //SERVER
