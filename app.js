@@ -7,6 +7,7 @@ const express = require('express'),
     passportLocalMongoose = require('passport-local-mongoose'),
     Campground = require('./models/campground'),
     Comment = require('./models/comment'),
+    User = require('./models/user'),
     seedDB = require('./seeds');
 
 //DB CONNECT W/MONGOOSE
