@@ -184,6 +184,14 @@ app.get('/logout', (req, res) => {
     res.redirect('/campgrounds');
 });
 
+// isLoggedIn - middleware
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/login');
+}
+
 //SERVER
 app.listen(3000, () => {
     console.log('Started yelp-camp server');
