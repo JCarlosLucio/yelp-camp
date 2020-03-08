@@ -143,6 +143,28 @@ app.post('/campgrounds/:id/comments', (req, res) => {
     });
 });
 
+// ========================================
+//              AUTH ROUTES
+// ========================================
+
+// REGISTER - Show register form
+app.get('/register', (req, res) => {
+    res.render('register');
+});
+// REGISTER - Handle signup logic
+app.post('/register', (req, res) => {
+    let newUser = new User({ username: req.body.username });
+    User.register(newUser, req.body.password, (err, user) => {
+        if (err) {
+            console.log(err);
+            return res.render('register');
+        }
+        passport.authenticate('local')(req, res, () => {
+            res.redirect('/campgrounds');
+        });
+    });
+});
+
 //SERVER
 app.listen(3000, () => {
     console.log('Started yelp-camp server');
