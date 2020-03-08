@@ -106,7 +106,7 @@ app.get('/campgrounds/:id', (req, res) => {
 // ========================================
 
 // NEW COMMENT - Display form to make a new comment
-app.get('/campgrounds/:id/comments/new', (req, res) => {
+app.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
     // find campground by id 
     Campground.findById(req.params.id, (err, campground) => {
         if (err) {
@@ -119,7 +119,7 @@ app.get('/campgrounds/:id/comments/new', (req, res) => {
 });
 
 // CREATE COMMENT - Add new comment to campground/:id
-app.post('/campgrounds/:id/comments', (req, res) => {
+app.post('/campgrounds/:id/comments', isLoggedIn, (req, res) => {
     // look up using id
     Campground.findById(req.params.id, (err, campground) => {
         if (err) {
