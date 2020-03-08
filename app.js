@@ -38,6 +38,14 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// Pass currentUser info to every route
+// same as this example:
+// === res.render('campgrounds/index', { campgrounds: allCampgrounds, currentUser: req.user }); ===
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    next();
+});
+
 // RESTFUL ROUTES
 // name      url                 verb       description
 //=========================================================================
@@ -186,7 +194,7 @@ app.get('/logout', (req, res) => {
 
 // isLoggedIn - middleware
 function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()){
+    if (req.isAuthenticated()) {
         return next();
     }
     res.redirect('/login');
