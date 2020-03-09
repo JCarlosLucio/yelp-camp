@@ -43,10 +43,14 @@ router.post('/', isLoggedIn, (req, res) => {
                 if (err) {
                     console.error(err);
                 } else {
+                    // add username and id to comment
+                    comment.author.id = req.user._id;
+                    comment.author.username = req.user.username;
                     // connect new comment to campground
+                    comment.save();
                     campground.comments.push(comment);
                     campground.save();
-                    console.log('Created NEW comment');
+                    // console.log(comment);
                     // redirect to campground show page
                     res.redirect(`/campgrounds/${campground._id}`);
                 };
