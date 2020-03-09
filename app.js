@@ -54,8 +54,13 @@ app.use((req, res, next) => {
 });
 
 //ROUTES
-app.use(campgroundRoutes);
-app.use(commentRoutes);
+// the first parameter makes every route in the specified file take the starting url
+// example: for routes/campgrounds.js all routes started with /campgrounds so we simplified them by 
+// giving it here.
+app.use('/campgrounds', campgroundRoutes);
+// when using :id or similar use {mergeParams: true} on router  when requiring it in the route file
+app.use('/campgrounds/:id/comments', commentRoutes);
+// in this case index doesn't take the first argument since all of its routes start differently
 app.use(indexRoutes);
 
 //SERVER
