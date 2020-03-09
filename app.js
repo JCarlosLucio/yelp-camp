@@ -30,7 +30,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 // SEEDDB
 // function to seed DB to help test site
-seedDB();
+// seedDB();
 
 // PASSPORT CONFIGURATION
 //used for authentication
