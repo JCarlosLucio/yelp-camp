@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({ mergeParams: true }); // use mergeParams so :id can pass from app.js
 const Campground = require('../models/campground');
 const Comment = require('../models/comment');
 
@@ -19,7 +19,7 @@ const Comment = require('../models/comment');
 //         /campgrounds/:id/comments/       POST     Add new comment to campground/:id
 
 // NEW COMMENT - Display form to make a new comment
-router.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
     // find campground by id 
     Campground.findById(req.params.id, (err, campground) => {
         if (err) {
@@ -31,7 +31,7 @@ router.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
     });
 });
 // CREATE COMMENT - Add new comment to campground/:id
-router.post('/campgrounds/:id/comments', isLoggedIn, (req, res) => {
+router.post('/', isLoggedIn, (req, res) => {
     // look up using id
     Campground.findById(req.params.id, (err, campground) => {
         if (err) {
