@@ -7,12 +7,15 @@ const Campground = require('../models/campground');
 // ========================================
 
 // RESTFUL ROUTES
-// name      url                 verb       description
-//=========================================================================
-// INDEX    /campgrounds         GET      Display a list of all campgrounds
-// NEW      /campgrounds/new     GET      Display form to make a new campground
-// CREATE   /campgrounds         POST     Add new campground to DB
-// SHOW     /campgrounds/:id     GET      Shows info about one campground
+// name             path           http verb               description                         mongoose method
+//===============================================================================================================
+// INDEX     /campgrounds             GET      Display a list of all campgrounds             .find()
+// NEW       /campgrounds/new         GET      Display form to make a new campground         N/A
+// CREATE    /campgrounds             POST     Add new campground to DB, then redirect       .create()
+// SHOW      /campgrounds/:id         GET      Shows info about one specific campground      .findById()
+// EDIT      /campgrounds/:id/edit    GET      Shows edit form for one campground            .findById()
+// UPDATE    /campgrounds/:id         PUT      Update particular campground, then redirect   .findByIdAndUpdate()
+// DESTROY   /campgrounds/:id         DELETE   Delete particular campground, then redirect   .findByIdAndRemove()
 
 // INDEX - show all campgrounds
 router.get('/', (req, res) => {
@@ -65,6 +68,12 @@ router.get('/:id', (req, res) => {
         };
     });
 });
+
+// EDIT - Edit campground route
+router.get('/:id/edit', (req, res) => {
+    res.render('campgrounds/edit');
+});
+
 // isLoggedIn - middleware
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
