@@ -4,11 +4,11 @@ const express = require('express'),
     mongoose = require('mongoose'),
     passport = require('passport'),
     LocalStrategy = require('passport-local'),
-    passportLocalMongoose = require('passport-local-mongoose'),
     Campground = require('./models/campground'),
     Comment = require('./models/comment'),
     User = require('./models/user'),
-    seedDB = require('./seeds');
+    // seedDB = require('./seeds'),
+    methodOverride = require('method-override');
 
 // ROUTES require
 const campgroundRoutes = require('./routes/campgrounds'),
@@ -28,6 +28,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 // CUSTOM CSS
 app.use(express.static(__dirname + '/public'));
+// METHOD-OVERRIDE
+// used to override UPDATE(app.put) and DESTROY(app.delete) routes
+app.use(methodOverride('_method'));
 // SEEDDB
 // function to seed DB to help test site
 // seedDB();
