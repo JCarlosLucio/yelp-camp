@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Campground = require('../models/campground');
+const Comment = require('../models/comment');
 
 // ========================================
 //              CAMPGROUNDS ROUTES
@@ -97,13 +98,16 @@ router.put('/:id', (req, res) => {
 // DESTROY - Delete campground
 router.delete('/:id', (req, res) => {
     // find and remove the correct campground
-    Campground.findByIdAndRemove(req.params.id, (err) => {
+    Campground.findByIdAndRemove(req.params.id, (err, campgroundRemoved) => {
         if (err) {
             res.redirect('/campgrounds');
-        } else {
-            //redirect somewhere
-            res.redirect('/campgrounds');
         }
+        Comment.deleteMany({ _id: { $in: campgroundRemoved.comments } }, (err) => {
+            if (err) {
+                console.log(err);
+            }
+            res.redirect("/campgrounds");
+        });
     });
 });
 
