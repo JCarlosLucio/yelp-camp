@@ -17,6 +17,7 @@ const campgroundRoutes = require('./routes/campgrounds'),
 
 //DB CONNECT W/MONGOOSE
 mongoose.set('useUnifiedTopology', true);
+mongoose.set('useFindAndModify', false);
 mongoose.connect('mongodb://localhost:27017/yelp_camp', { useNewUrlParser: true })
     .catch((err) => {
         console.error('CONNECTION ERROR: ', err);
