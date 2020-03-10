@@ -80,6 +80,20 @@ router.get('/:id/edit', (req, res) => {
     });
 });
 
+// UPDATE - Update campground route
+router.put('/:id', (req, res) => {
+    // find and update the correct campground
+    // req.body.campground comes from  the form (name=) that is set up as "campground[name], campground[image]..."
+    Campground.findByIdAndUpdate(req.params.id, req.body.campground, (err, updatedCampground) => {
+        if (err) {
+            res.redirect('/campgrounds');
+        } else {
+            // redirect somewhere (show page)
+            res.redirect('/campgrounds/' + req.params.id);
+        }
+    });
+});
+
 // isLoggedIn - middleware
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
