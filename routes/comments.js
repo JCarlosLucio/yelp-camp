@@ -8,15 +8,22 @@ const Comment = require('../models/comment');
 // ========================================
 
 // RESTFUL ROUTES
-// name      url                 verb       description
-//=========================================================================
-// INDEX    /campgrounds         GET      Display a list of all campgrounds
-// NEW      /campgrounds/new     GET      Display form to make a new campground
-// CREATE   /campgrounds         POST     Add new campground to DB
-// SHOW     /campgrounds/:id     GET      Shows info about one campground
-// NESTED ROUTES
-//         /campgrounds/:id/comments/new    GET      Display form to make a new comment
-//         /campgrounds/:id/comments/       POST     Add new comment to campground/:id
+// name             path           http verb               description                         mongoose method
+//===============================================================================================================
+// INDEX     /campgrounds             GET      Display a list of all campgrounds             .find()
+// NEW       /campgrounds/new         GET      Display form to make a new campground         N/A
+// CREATE    /campgrounds             POST     Add new campground to DB, then redirect       .create()
+// SHOW      /campgrounds/:id         GET      Shows info about one specific campground      .findById()
+// EDIT      /campgrounds/:id/edit    GET      Shows edit form for one campground            .findById()
+// UPDATE    /campgrounds/:id         PUT      Update particular campground, then redirect   .findByIdAndUpdate()
+// DESTROY   /campgrounds/:id         DELETE   Delete particular campground, then redirect   .findByIdAndRemove()
+// NESTED ROUTES ================================================================================================
+// They all use /campgrounds/:id/comments because they are nested.(As shown in the routes in app.js)
+//  NEW      /new                     GET      Display form to make a new comment      N/A
+//  CREATE   /                        POST     Add new comment to campground/:id       .create()
+//  EDIT     /:comment_id/edit        GET      Shows edit form for specific comment    .findById()
+//  UPDATE   /:comment_id             PUT      Update specific comment, then redirect  .findByIdAndUpdate()
+//  DESTROY  /:comment_id             DELETE   Delete specific comment, then redirect  .findByIdAndRemove()
 
 // NEW COMMENT - Display form to make a new comment
 router.get('/new', isLoggedIn, (req, res) => {
@@ -58,6 +65,17 @@ router.post('/', isLoggedIn, (req, res) => {
         };
     });
 });
+// EDIT - Shows edit form for specific comment
+router.get('/:comment_id/edit', (req, res) => {
+    Comment.findById(req.params.comment_id, (err, foundComment) => {
+        if (err) {
+            res.redirect('back');
+        } else {
+            res.render('comments/edit', { campground_id: req.params.id, comment: foundComment });
+        }
+    });
+});
+
 // isLoggedIn - middleware
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
