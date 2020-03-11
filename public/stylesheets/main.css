@@ -18,6 +18,6 @@ body, h4, p {
     border-color: rgba(255, 255, 255, 0);
 }
 
-#delete-form {
+.delete-form {
     display: inline;
 }
