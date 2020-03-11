@@ -75,6 +75,16 @@ router.get('/:comment_id/edit', (req, res) => {
         }
     });
 });
+// UPDATE - Update specific comment, then redirect
+router.put('/:comment_id', (req, res) => {
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
+        if (err) {
+            res.redirect('back');
+        } else {
+            res.redirect('/campgrounds/' + req.params.id);
+        }
+    });
+});
 
 // isLoggedIn - middleware
 function isLoggedIn(req, res, next) {
