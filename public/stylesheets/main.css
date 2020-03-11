@@ -1,5 +1,21 @@
-.thumbnail {
-    padding: 0;
+html {
+    background-color: rgb(31, 31, 56);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+
+body, h4, p {
+    background: none;
+    color: white;
+}
+
+.jumbotron, .navbar, .thumbnail, .well, .list-group-item {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0);
 }
 
 #delete-form {
