@@ -2,6 +2,7 @@ const express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
+    flash = require('connect-flash'),
     passport = require('passport'),
     LocalStrategy = require('passport-local'),
     Campground = require('./models/campground'),
@@ -32,6 +33,8 @@ app.use(express.static(__dirname + '/public'));
 // METHOD-OVERRIDE
 // used to override UPDATE(app.put) and DESTROY(app.delete) routes
 app.use(methodOverride('_method'));
+// CONNECT-FLASH
+app.use(flash());
 // SEEDDB
 // function to seed DB to help test site
 // seedDB();
