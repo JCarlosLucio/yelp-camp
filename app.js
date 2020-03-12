@@ -52,11 +52,16 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// Pass currentUser info to every route
+// Pass info to every route
 // same as this example:
+// pass currentUser info
 // === res.render('campgrounds/index', { campgrounds: allCampgrounds, currentUser: req.user }); ===
 app.use((req, res, next) => {
+    //pass currentUser info
     res.locals.currentUser = req.user;
+    //pass error/success message from flash
+    res.locals.error = req.flash('error');
+    res.locals.success = req.flash('success');
     next();
 });
 
