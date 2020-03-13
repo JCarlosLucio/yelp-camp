@@ -1,20 +1,30 @@
 html {
-    background-color: rgb(31, 31, 56);
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: #2ebf91;
     height: 100%;
     width: 100%;
     min-height: 100%;
     margin: 0;
 }
 
-body, h4, p {
-    background: none;
+body {
+    background: #8360c3;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #2ebf91, #8360c3);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #2ebf91, #8360c3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.navbar-default .navbar-brand, .navbar-default .navbar-nav > li > a, body, h4, p {
     color: white;
 }
 
+.glyphicon {
+    top: 8px;
+    font-size: 8rem;
+}
+
 .jumbotron, .navbar, .thumbnail, .well, .list-group-item {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.7);
     border-color: rgba(255, 255, 255, 0);
 }
 
