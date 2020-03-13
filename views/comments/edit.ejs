@@ -2,8 +2,8 @@
 
 <div class="container">
     <div class="row">
-        <h1 style="text-align: center;">Edit Comment</h1> <!-- Temporary Inline-style -->
-        <div style="width: 30%; margin: 2rem auto;"> <!-- Temporary Inline-style -->
+        <h1>Edit Comment</h1>
+        <div class="custom-form">
             <form action="/campgrounds/<%= campground_id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
                 <div class="form-group">
                     <input class="form-control" type="text" name="comment[text]" value="<%= comment.text %>">
