@@ -47,6 +47,8 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
     Campground.create(newCampground, (err, newlyCreated) => {
         if (err) {
             console.log(err);
+            req.flash('error', 'Could not add new campground');
+            res.redirect('/campgrounds');
         } else {
             //redirect to campground page
             req.flash('success', 'Successfully added campground');
@@ -66,7 +68,7 @@ router.get('/:id', (req, res) => {
     Campground.findById(req.params.id).populate('comments').exec((err, foundCampground) => {
         if (err || !foundCampground) {
             req.flash('error', 'Campground not found');
-            res.redirect('back');
+            res.redirect('/campgrounds');
         } else {
             // console.log(foundCampground);
             // render show template with that campground
