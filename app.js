@@ -35,6 +35,8 @@ app.use(express.static(__dirname + '/public'));
 app.use(methodOverride('_method'));
 // CONNECT-FLASH
 app.use(flash());
+// MOMENT JS -to be able to use moment in all our view files
+app.locals.moment = require('moment');
 // SEEDDB
 // function to seed DB to help test site
 // seedDB();
@@ -63,6 +65,7 @@ app.use((req, res, next) => {
     res.locals.error = req.flash('error');
     res.locals.success = req.flash('success');
     next();
+
 });
 
 //ROUTES
