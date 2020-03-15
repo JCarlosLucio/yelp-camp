@@ -5,6 +5,16 @@ const Comment = require('../models/comment');
 // use ../middleware instead of ../middleware/index because index is a special name for a file to be called
 const middleware = require('../middleware');
 
+// ===== Node-Geocoder Config ======
+const NodeGeocoder = require('node-geocoder');
+const options = {
+    provider: 'google',
+    httpAdapter: 'https',
+    apiKey: process.env.GEOCODER_API_KEY,
+    formatter: null
+};
+const geocoder = NodeGeocoder(options);
+
 // ========================================
 //              CAMPGROUNDS ROUTES
 // ========================================
@@ -42,18 +52,37 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
         id: req.user._id,
         username: req.user.username
     };
-    let newCampground = { name: name, price: price, image: image, author: author, description: desc };
-    //create a new campground and save to DB
-    Campground.create(newCampground, (err, newlyCreated) => {
-        if (err) {
-            console.log(err);
-            req.flash('error', 'Could not add new campground');
-            res.redirect('/campgrounds');
-        } else {
-            //redirect to campground page
-            req.flash('success', 'Successfully added campground');
-            res.redirect('/campgrounds');
+    geocoder.geocode(req.body.location, function (err, data) {
+        if (err || !data.length) {
+            console.log('GEOCODER ERROR', err);
+            req.flash('error', 'Invalid address');
+            return res.redirect('/campgrounds');
+        }
+        let lat = data[0].latitude;
+        let lng = data[0].longitude;
+        let location = data[0].formattedAddress;
+        let newCampground = {
+            name: name,
+            price: price,
+            image: image,
+            author: author,
+            description: desc,
+            location: location,
+            lat: lat,
+            lng: lng
         };
+        //create a new campground and save to DB
+        Campground.create(newCampground, (err, newlyCreated) => {
+            if (err) {
+                console.log(err);
+                req.flash('error', 'Could not add new campground');
+                res.redirect('/campgrounds');
+            } else {
+                //redirect to campground page
+                req.flash('success', 'Successfully added campground');
+                res.redirect('/campgrounds');
+            };
+        });
     });
 });
 
@@ -86,15 +115,26 @@ router.get('/:id/edit', middleware.checkCampgroundOwnership, (req, res) => {
 
 // UPDATE - Update campground route
 router.put('/:id', middleware.checkCampgroundOwnership, (req, res) => {
-    // find and update the correct campground
-    // req.body.campground comes from  the form (name=) that is set up as "campground[name], campground[image]..."
-    Campground.findByIdAndUpdate(req.params.id, req.body.campground, (err, updatedCampground) => {
-        if (err) {
-            res.redirect('/campgrounds');
-        } else {
-            // redirect somewhere (show page)
-            res.redirect('/campgrounds/' + req.params.id);
+    geocoder.geocode(req.body.location, function (err, data) {
+        if (err || !data.length) {
+            req.flash('error', 'Invalid address');
+            return res.redirect('/campgrounds');
         }
+        req.body.campground.lat = data[0].latitude;
+        req.body.campground.lng = data[0].longitude;
+        req.body.campground.location = data[0].formattedAddress;
+        // find and update the correct campground
+        // req.body.campground comes from  the form (name=) that is set up as "campground[name], campground[image]..."
+        Campground.findByIdAndUpdate(req.params.id, req.body.campground, (err, updatedCampground) => {
+            if (err) {
+                req.flash("error", err.message);
+                res.redirect('/campgrounds');
+            } else {
+                // redirect somewhere (show page)
+                req.flash("success", "Successfully Updated");
+                res.redirect('/campgrounds/' + req.params.id);
+            }
+        });
     });
 });
 
