@@ -32,18 +32,23 @@ const geocoder = NodeGeocoder(options);
 
 // INDEX - show all campgrounds
 router.get('/', (req, res) => {
+    let searchResult;
     if (req.query.search) {
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
         Campground.find({ $or: [{ name: regex, }, { location: regex }, { "author.username": regex }] }, (err, allCampgrounds) => {
             if (err) {
                 console.log('OH NO, ERROR!', err);
+                req.flash('error', 'Something went wrong');
+                res.redirect('/campgrounds');
             } else {
-                if (allCampgrounds.length < 1) {
-                    req.flash('error', `Your search - "${req.query.search}" - did not match any campgrounds.`);
-                    res.redirect('/campgrounds');
+                if (allCampgrounds.length === 0) {
+                    searchResult = `Your search - "${req.query.search}" - did not match any campgrounds`;
+                } else if (allCampgrounds.length === 1) {
+                    searchResult = `Showing ${allCampgrounds.length} result for "${req.query.search}"`;
                 } else {
-                    res.render('campgrounds/index', { campgrounds: allCampgrounds });
+                    searchResult = `Showing ${allCampgrounds.length} results for "${req.query.search}"`;
                 }
+                res.render('campgrounds/index', { campgrounds: allCampgrounds, searchResult: searchResult });
             }
         });
     } else {
@@ -52,7 +57,7 @@ router.get('/', (req, res) => {
             if (err) {
                 console.log('OH NO, ERROR!', err);
             } else {
-                res.render('campgrounds/index', { campgrounds: allCampgrounds });
+                res.render('campgrounds/index', { campgrounds: allCampgrounds, searchResult: searchResult });
             }
         });
     }
