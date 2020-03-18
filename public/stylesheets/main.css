@@ -39,6 +39,11 @@ body {
     color: white;
 }
 
+#index-campgrounds{
+    display: flex;
+    flex-wrap: wrap;
+}
+
 /* Google Maps */
 #map {
     height: 400px;
