@@ -17,6 +17,11 @@
                 <a class="btn btn-success" href="/campgrounds/new">Add New Campground</a>
             </p>
         </div>
+        <div class="col-md-12 col-sm-12 text-left">
+            <% if (searchResult !== undefined) { %>
+                <h5><%= searchResult %> - <a href="/campgrounds"> All campgrounds</a></h5>
+            <% } %>
+        </div>
     </header>
     <div class="row text-center" style="display: flex; flex-wrap: wrap;">
         <% campgrounds.forEach((campground) => { %>
