@@ -1,0 +1,53 @@
+<%- include ('../partials/header') %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= user.avatar %>" alt="user profile image">
+                <div class="caption">
+                    <h3>
+                        <strong>
+                            <%= user.firstName + ' ' + user.lastName %>
+                        </strong>
+                    </h3>
+                    <span class="glyphicon glyphicon-envelope"></span>
+                    Mail to:
+                    <a href="<%= user.email %>"> <%= user.email %></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="container-fluid">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <span class="glyphicon glyphicon-tent"></span>
+                        <h1>
+                            <strong><%= user.username %>'s campgrounds</strong>
+                        </h1>
+                        <hr>
+                    </div>
+                </div>
+                <% campgrounds.forEach((campground) => { %>
+                <div class="col-md-3">
+                    <div class="thumbnail">
+                        <img class="img-responsive" src="<%= campground.image %>" alt="campground image">
+                        <div class="caption">
+                            <a href="/campgrounds/<%= campground.id %>">
+                                <h5>
+                                    <strong><%= campground.name %></strong>
+                                </h5>
+                            </a>
+                            <h6>
+                                <%= moment(campground.createdAt).format('MMM Do YYYY') %>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include ('../partials/footer') %>
