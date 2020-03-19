@@ -18,7 +18,13 @@ router.get('/register', (req, res) => {
 });
 // REGISTER - Handle signup logic
 router.post('/register', (req, res) => {
-    let newUser = new User({ username: req.body.username });
+    let newUser = new User({
+        username: req.body.username,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        avatar: req.body.avatar,
+        email: req.body.email
+    });
     User.register(newUser, req.body.password, (err, user) => {
         if (err) {
             req.flash('error', err.message);
