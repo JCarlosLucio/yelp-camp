@@ -45,7 +45,9 @@ router.post('/login', passport.authenticate('local',
     //middleware
     {
         successRedirect: '/campgrounds',
-        failureRedirect: '/login'
+        failureRedirect: '/login',
+        failureFlash: true,
+        successFlash: 'Welcome to YelpCamp!'
     }
 ), (req, res) => { });
 // LOGOUT 
