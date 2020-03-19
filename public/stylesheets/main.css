@@ -14,7 +14,7 @@ body {
     background-size: cover;
 }
 
-.glyphicon {
+h1 .glyphicon {
     top: 8px;
     font-size: 8rem;
 }
@@ -35,7 +35,7 @@ body {
     text-align: center;
 }
 
-.navbar-default .navbar-nav > li > a, .navbar-default .navbar-brand, body, h4, p {
+.navbar-default .navbar-nav > li > a, .navbar-default .navbar-brand, .text-muted, body, h4, p, a {
     color: white;
 }
 
