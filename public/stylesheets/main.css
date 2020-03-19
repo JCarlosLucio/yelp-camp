@@ -24,6 +24,10 @@ h1 .glyphicon {
     border-color: rgba(255, 255, 255, 0);
 }
 
+.navbar {
+    border-radius: 0;
+}
+
 .delete-form {
     display: inline;
 }
