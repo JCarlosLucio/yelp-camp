@@ -14,11 +14,6 @@ body {
     background-size: cover;
 }
 
-h1 .glyphicon {
-    top: 8px;
-    font-size: 8rem;
-}
-
 .jumbotron, .navbar, .thumbnail, .well, .list-group-item {
     background-color: rgba(0, 0, 0, 0.7);
     border-color: rgba(255, 255, 255, 0);
@@ -31,10 +26,21 @@ h1 .glyphicon {
 .delete-form {
     display: inline;
 }
+
 .custom-form {
     width: 40%; 
     margin: 2rem auto;
 }
+
+.navbar-glyphicon {
+    top: 3px;
+}
+
+h1 .glyphicon {
+    top: 8px;
+    font-size: 8rem;
+}
+
 .row h1 {
     text-align: center;
 }
