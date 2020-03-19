@@ -1,9 +1,7 @@
 html {
     background-color: #2ebf91;
-    height: 100%;
-    width: 100%;
+    position: relative;
     min-height: 100%;
-    margin: 0;
 }
 
 body {
@@ -12,6 +10,7 @@ body {
     background: linear-gradient(to top, #2ebf91, #8360c3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background-repeat: no-repeat;
     background-size: cover;
+    margin-bottom: 40px;
 }
 
 .jumbotron, .navbar, .thumbnail, .well, .list-group-item {
@@ -34,6 +33,19 @@ body {
 
 .navbar-glyphicon {
     top: 3px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.container .text-muted {
+    margin: 10px 0;
 }
 
 h1 .glyphicon {
