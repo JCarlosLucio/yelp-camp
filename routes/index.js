@@ -22,23 +22,31 @@ router.get('/register', (req, res) => {
 });
 // REGISTER - Handle signup logic
 router.post('/register', (req, res) => {
-    let newUser = new User({
-        username: req.body.username,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        avatar: req.body.avatar,
-        email: req.body.email
-    });
-    User.register(newUser, req.body.password, (err, user) => {
-        if (err) {
-            req.flash('error', err.message);
-            return res.redirect('register');
+    if (req.body.password === req.body.confirm) {
+        if (req.body.avatar === ""){
+            req.body.avatar = 'https://source.unsplash.com/2LowviVHZ-E';
         }
-        passport.authenticate('local')(req, res, () => {
-            req.flash('success', `Welcome to YelpCamp ${user.username}`);
-            res.redirect('/campgrounds');
+        let newUser = new User({
+            username: req.body.username,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            avatar: req.body.avatar,
+            email: req.body.email
         });
-    });
+        User.register(newUser, req.body.password, (err, user) => {
+            if (err) {
+                req.flash('error', err.message);
+                return res.redirect('register');
+            }
+            passport.authenticate('local')(req, res, () => {
+                req.flash('success', `Welcome to YelpCamp ${user.username}`);
+                res.redirect('/campgrounds');
+            });
+        });
+    } else {
+        req.flash('error', 'Passwords do not match');
+        return res.redirect('back');
+    }
 });
 // LOGIN - Show login form
 router.get('/login', (req, res) => {
@@ -84,7 +92,7 @@ router.post('/forgot', (req, res, next) => {
                 user.resetPasswordToken = token;
                 user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
                 user.save((err) => {
-                    if(err) {
+                    if (err) {
                         req.flash('error', 'Something went wrong, please try again in a few minutes');
                         return res.redirect('/forgot');
                     }
@@ -150,7 +158,7 @@ router.post('/reset/:token', (req, res) => {
                         user.resetPasswordToken = undefined;
                         user.resetPasswordExpires = undefined;
                         user.save((err) => {
-                            if(err) {
+                            if (err) {
                                 req.flash('error', 'Something went wrong, please try again in a few minutes');
                                 return res.redirect('back');
                             }
