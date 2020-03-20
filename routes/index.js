@@ -61,6 +61,11 @@ router.get('/logout', (req, res) => {
     res.redirect('/campgrounds');
 });
 
+// FORGOT PASSWORD 
+router.get('/forgot', (req, res) => {
+    res.render('/forgot');
+});
+
 // USER PROFILE - Show users profile
 router.get('/users/:id', (req, res) => {
     User.findById(req.params.id, (err, foundUser) => {
