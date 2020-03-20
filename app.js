@@ -19,6 +19,7 @@ const campgroundRoutes = require('./routes/campgrounds'),
     indexRoutes = require('./routes/index');
 
 //DB CONNECT W/MONGOOSE
+mongoose.set('useCreateIndex', true); // When using {unique: true} on models 
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useFindAndModify', false);
 mongoose.connect('mongodb://localhost:27017/yelp_camp', { useNewUrlParser: true })
