@@ -66,7 +66,7 @@ router.get('/logout', (req, res) => {
 router.get('/forgot', (req, res) => {
     res.render('forgot');
 });
-// FORGOT POST - Handles the logic fto create, use and mail token to user
+// FORGOT POST - Handles the logic to create, use and mail token to user
 router.post('/forgot', (req, res, next) => {
     async.waterfall([
         function (done) {
@@ -123,7 +123,17 @@ router.post('/forgot', (req, res, next) => {
     });
 });
 
-
+// RESET PASSWORD
+// RESET GET - Show reset password page
+router.get('/reset/:token', (req, res) => {
+    User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
+        if (!user) {
+            req.flash('error', 'Password reset token is invalid or has expired');
+            res.redirect('/forgot');
+        }
+        res.render('reset', { token: req.params.token });
+    });
+});
 
 
 
