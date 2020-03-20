@@ -109,10 +109,9 @@ router.post('/forgot', (req, res, next) => {
             smtpTransport.sendMail(mailOptions, (err) => {
                 // Added error handling
                 if (err) {
-                    req.flash('error', 'sendMail ERROR');
-                    req.redirect('/forgot');
+                    req.flash('error', 'Something went wrong');
+                    res.redirect('/forgot');
                 }
-                console.log('mail sent');
                 req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
                 done(err, 'done');
             });
@@ -129,16 +128,70 @@ router.get('/reset/:token', (req, res) => {
     User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
         if (!user) {
             req.flash('error', 'Password reset token is invalid or has expired');
-            res.redirect('/forgot');
+            return res.redirect('/forgot');
         }
         res.render('reset', { token: req.params.token });
     });
 });
-
-
-
-
-
+// RESET POST - Handle reset password logic
+router.post('/reset/:token', (req, res) => {
+    async.waterfall([
+        function (done) {
+            User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
+                if (!user) {
+                    req.flash('error', 'Password reset token is invalid or has expired');
+                    return res.redirect('/forgot');
+                }
+                if (req.body.password === req.body.confirm) {
+                    user.setPassword(req.body.password, (err) => {
+                        user.resetPasswordToken = undefined;
+                        user.resetPasswordExpires = undefined;
+                        user.save((err) => {
+                            req.logIn(user, (err) => {
+                                done(err, user);
+                            });
+                        });
+                    });
+                } else {
+                    req.flash('error', 'Passwords do not match');
+                    return res.redirect('..');
+                }
+            });
+        },
+        function (user, done) {
+            let smtpTransport = nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user: 'botwebdev3@gmail.com',
+                    pass: process.env.GMAILPW
+                }
+            });
+            let mailOptions = {
+                to: user.email,
+                from: 'botwebdev3@gmail.com',
+                subject: 'Your password has been changed',
+                text: 'Hello, \n\n' + 
+                'This is a confirmation that the password for your account ' + user.email + ' has been changed.\n' 
+            };
+            smtpTransport.sendMail(mailOptions, (err) => {
+                // Added error handling
+                if (err) {
+                    req.flash('error', 'Something went wrong');
+                    res.redirect('..');
+                }
+                req.flash('success', 'Success! Your password has been changed');
+                done(err);
+            });
+        }
+    ], (err) => {
+        if (err) {
+            console.log(err);
+            req.flash('error', 'Oops something went wrong!');
+            return res.redirect('/campgrounds');
+        }
+        res.redirect('/campgrounds');
+    });
+});
 
 // USER PROFILE - Show users profile
 router.get('/users/:id', (req, res) => {
