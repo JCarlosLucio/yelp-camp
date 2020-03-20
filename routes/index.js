@@ -84,7 +84,10 @@ router.post('/forgot', (req, res, next) => {
                 user.resetPasswordToken = token;
                 user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
                 user.save((err) => {
-                    //Maybe needs extra error handling here!
+                    if(err) {
+                        req.flash('error', 'Something went wrong, please try again in a few minutes');
+                        return res.redirect('/forgot');
+                    }
                     done(err, token, user);
                 });
             });
@@ -147,6 +150,10 @@ router.post('/reset/:token', (req, res) => {
                         user.resetPasswordToken = undefined;
                         user.resetPasswordExpires = undefined;
                         user.save((err) => {
+                            if(err) {
+                                req.flash('error', 'Something went wrong, please try again in a few minutes');
+                                return res.redirect('..');
+                            }
                             req.logIn(user, (err) => {
                                 done(err, user);
                             });
@@ -170,8 +177,8 @@ router.post('/reset/:token', (req, res) => {
                 to: user.email,
                 from: 'botwebdev3@gmail.com',
                 subject: 'Your password has been changed',
-                text: 'Hello, \n\n' + 
-                'This is a confirmation that the password for your account ' + user.email + ' has been changed.\n' 
+                text: 'Hello, \n\n' +
+                    'This is a confirmation that the password for your account ' + user.email + ' has been changed.\n'
             };
             smtpTransport.sendMail(mailOptions, (err) => {
                 // Added error handling
@@ -185,7 +192,6 @@ router.post('/reset/:token', (req, res) => {
         }
     ], (err) => {
         if (err) {
-            console.log(err);
             req.flash('error', 'Oops something went wrong!');
             return res.redirect('/campgrounds');
         }
