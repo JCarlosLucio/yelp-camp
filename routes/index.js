@@ -62,9 +62,73 @@ router.get('/logout', (req, res) => {
 });
 
 // FORGOT PASSWORD 
+// FORGOT GET - Shows the forgot page
 router.get('/forgot', (req, res) => {
-    res.render('/forgot');
+    res.render('forgot');
 });
+// FORGOT POST - Handles the logic fto create, use and mail token to user
+router.post('/forgot', (req, res, next) => {
+    async.waterfall([
+        function (done) {
+            crypto.randomBytes(20, (err, buf) => {
+                let token = buf.toString('hex');
+                done(err, token);
+            });
+        },
+        function (token, done) {
+            User.findOne({ email: req.body.email }, (err, user) => {
+                if (!user) {
+                    req.flash('error', 'No account with that email address exists');
+                    return res.redirect('/forgot');
+                }
+                user.resetPasswordToken = token;
+                user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+                user.save((err) => {
+                    //Maybe needs extra error handling here!
+                    done(err, token, user);
+                });
+            });
+        },
+        function (token, user, done) {
+            let smtpTransport = nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user: 'botwebdev3@gmail.com',
+                    pass: process.env.GMAILPW
+                }
+            });
+            let mailOptions = {
+                to: user.email,
+                from: 'botwebdev3@gmail.com',
+                subject: 'YelpCamp Password Reset',
+                text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                    'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                    'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+                    'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+            };
+            smtpTransport.sendMail(mailOptions, (err) => {
+                // Added error handling
+                if (err) {
+                    req.flash('error', 'sendMail ERROR');
+                    req.redirect('/forgot');
+                }
+                console.log('mail sent');
+                req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+                done(err, 'done');
+            });
+        }
+    ], (err) => {
+        if (err) return next(err);
+        res.redirect('/forgot');
+    });
+});
+
+
+
+
+
+
+
 
 // USER PROFILE - Show users profile
 router.get('/users/:id', (req, res) => {
