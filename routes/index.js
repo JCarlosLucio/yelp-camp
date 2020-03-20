@@ -3,6 +3,9 @@ const router = express.Router();
 const passport = require('passport');
 const User = require('../models/user');
 const Campground = require('../models/campground');
+const async = require('async');
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
 // ROOT ROUTE
 router.get('/', (req, res) => {
