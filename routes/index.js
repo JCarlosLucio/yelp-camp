@@ -152,7 +152,7 @@ router.post('/reset/:token', (req, res) => {
                         user.save((err) => {
                             if(err) {
                                 req.flash('error', 'Something went wrong, please try again in a few minutes');
-                                return res.redirect('..');
+                                return res.redirect('back');
                             }
                             req.logIn(user, (err) => {
                                 done(err, user);
@@ -161,7 +161,7 @@ router.post('/reset/:token', (req, res) => {
                     });
                 } else {
                     req.flash('error', 'Passwords do not match');
-                    return res.redirect('..');
+                    return res.redirect('back');
                 }
             });
         },
@@ -184,7 +184,7 @@ router.post('/reset/:token', (req, res) => {
                 // Added error handling
                 if (err) {
                     req.flash('error', 'Something went wrong');
-                    res.redirect('..');
+                    res.redirect('back');
                 }
                 req.flash('success', 'Success! Your password has been changed');
                 done(err);
