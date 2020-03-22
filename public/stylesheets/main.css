@@ -13,7 +13,11 @@ body {
     margin-bottom: 40px;
 }
 
-.jumbotron, .navbar, .thumbnail, .well, .list-group-item {
+hr {
+    border-top: 1px solid #ffffff
+}
+
+.jumbotron, .navbar, .card, .well, .list-group-item {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
