@@ -1,44 +1,53 @@
 <%- include ('partials/header') %>
 
-<div class="container">
-    <div class="row">
-        <h1>Sign Up</h1>
-        <div class="custom-form">
-            <form action="/register" method="POST">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input required class="form-control" type="text" name="username" id="username" placeholder="username">
+<div class="row custom-signup">
+    <div class="col-md-12">
+        <h1 class="text-center">Sign Up</h1>
+        <hr class="my-4">
+        <form action="/register" method="POST">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input required class="form-control" type="text" name="username" id="username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input required class="form-control" type="password" name="password" id="password" placeholder="Password" pattern=".{8,}" title="Eight or more characters">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm">Confirm Password</label>
+                        <input required class="form-control" type="password" id="confirm" name="confirm" placeholder="Confirm password">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input required class="form-control" type="password" name="password" id="password" placeholder="password" pattern=".{8,}" title="Eight or more characters">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="first-name">First Name</label>
+                            <input required class="form-control" type="text" name="firstName" id="first-name" placeholder="John">
+                        </div>
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="last-name">Last Name</label>
+                            <input required class="form-control" type="text" name="lastName" id="last-name" placeholder="Doe">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="email">Email</label>
+                            <input required class="form-control" type="email" name="email" id="email" placeholder="your_email@example.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="avatar">Avatar</label>
+                            <input class="form-control" type="text" name="avatar" id="avatar" placeholder="https://source.unsplash.com/your-image-avatar">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="confirm">Confirm Password</label>
-                    <input class="form-control" type="password" id="confirm" name="confirm" placeholder="confirm password">
-                </div>
-                <div class="form-group">
-                    <label for="first-name">First Name</label>
-                    <input required class="form-control" type="text" name="firstName" id="first-name" placeholder="John">
-                </div>
-                <div class="form-group">
-                    <label for="last-name">Last Name</label>
-                    <input required class="form-control" type="text" name="lastName" id="last-name" placeholder="Doe">
-                </div>
-                <div class="form-group">
-                    <label for="avatar">Avatar</label>
-                    <input class="form-control" type="text" name="avatar" id="avatar" placeholder="https://source.unsplash.com/your-image-avatar">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input required class="form-control" type="email" name="email" id="email" placeholder="john@doe.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
-                </div>
-                <div class="form-group">
-                   <button class="btn btn-lg btn-primary btn-block">Sign Up</button>
-                </div>
-            </form>
-            <a href="/campgrounds">Go Back</a>
-        </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-lg btn-primary btn-block">Sign Up</button>
+            </div>
+        </form>
+        <a href="/campgrounds">Go Back</a>
     </div>
 </div>
 
