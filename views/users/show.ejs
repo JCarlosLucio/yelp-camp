@@ -3,48 +3,43 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <div class="thumbnail">
-                <img class="img-responsive" src="<%= user.avatar %>" alt="user profile image">
-                <div class="caption">
-                    <h3>
-                        <strong>
-                            <%= user.firstName + ' ' + user.lastName %>
-                        </strong>
-                    </h3>
-                    <span class="glyphicon glyphicon-envelope"></span>
-                    Mail to:
-                    <a href="<%= user.email %>"> <%= user.email %></a>
+            <div class="card">
+                <img src="<%= user.avatar %>" class="card-img-top" alt="user profile image">
+                <div class="card-body">
+                    <h4 class="card-title"><%= user.firstName + ' ' + user.lastName %></h4>
+                    <hr class="mb-4">
+                    <div class="card-text">
+                        <p>Mail to:<a href="<%= user.email %>"> <%= user.email %></a></p>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-8">
-            <div class="container-fluid">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <span class="glyphicon glyphicon-tent"></span>
-                        <h1>
-                            <strong><%= user.username %>'s campgrounds</strong>
-                        </h1>
-                        <hr>
+            <div class="container">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h1><%= user.username %>'s campgrounds</h1>
+                        <hr class="my-4">
                     </div>
                 </div>
-                <% campgrounds.forEach((campground) => { %>
-                <div class="col-md-3">
-                    <div class="thumbnail">
-                        <img class="img-responsive" src="<%= campground.image %>" alt="campground image">
-                        <div class="caption">
-                            <a href="/campgrounds/<%= campground.id %>">
-                                <h5>
-                                    <strong><%= campground.name %></strong>
-                                </h5>
-                            </a>
-                            <h6>
-                                <%= moment(campground.createdAt).format('MMM Do YYYY') %>
-                            </h6>
+                <div class="row">
+                    <% campgrounds.forEach((campground) => { %>
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                            <div class="card">
+                                <img class="card-img-top" src="<%= campground.image %>" alt="campground image">
+                                <div class="card-body">
+                                    <a class="card-title" href="/campgrounds/<%= campground.id %>">
+                                        <%= campground.name %>
+                                    </a>
+                                    <hr class="my-1">
+                                    <div class="card-text">
+                                        <small><%= moment(campground.createdAt).format('MMM Do YYYY') %></small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    <% }); %>
                 </div>
-                <% }); %>
             </div>
         </div>
     </div>
