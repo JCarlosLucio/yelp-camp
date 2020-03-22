@@ -17,6 +17,11 @@ hr {
     border-top: 1px solid #ffffff
 }
 
+.text-muted {
+    color: white !important;
+    margin: 0.5rem 0;
+}
+
 .jumbotron, .navbar, .card, .well, .list-group-item {
     background-color: rgba(0, 0, 0, 0.7);
 }
@@ -39,10 +44,6 @@ hr {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-.container .text-muted {
-    margin: 10px 0;
-}
-
 .navbar-brand:hover, a:hover {
     color: rgb(63, 252, 120);
 }
@@ -51,7 +52,7 @@ hr {
     text-align: center;
 }
 
-.navbar-brand, .thumbnail .caption, .text-muted, body, h4, p, a {
+.navbar-brand, body, h4, p, a {
     color: white;
 }
 
