@@ -3,37 +3,32 @@
 <div class="container">
     <header class="jumbotron">
         <div class="container">
-            <h1><span class="glyphicon glyphicon-tent"></span> Welcome to YelpCamp!</h1>
-            <p>View the best campgrounds from all over the world!</p>
+            <h1 class="display-3"> Welcome to YelpCamp!</h1>
+            <p class="lead">View the best campgrounds from all over the world!</p>
+            <hr class="my-4">
             <p>
-                <form action="/campgrounds" method="GET" class="form-inline">
-                    <div class="form-group">
-                        <input class="form-control" type="text" name="search" placeholder="Campground search...">
-                        <input class="btn btn-default" type="submit" value="Search">
-                    </div>
+                <form action="/campgrounds" method="GET" class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Campground search..." aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </p>
             <p>
-                <a class="btn btn-success" href="/campgrounds/new">Add New Campground</a>
+                <a class="btn btn-success btn-lg" href="/campgrounds/new">Add New Campground</a>
             </p>
-        </div>
-        <div class="col-md-12 col-sm-12 text-left">
             <% if (searchResult !== undefined) { %>
-                <h5><%= searchResult %> - <a href="/campgrounds"> All campgrounds</a></h5>
+                <h6><%= searchResult %> - <a href="/campgrounds"> All campgrounds</a></h6>
             <% } %>
         </div>
     </header>
-    <div class="row text-center" id="index-campgrounds">
+    <div class="row text-center">
         <% campgrounds.forEach((campground) => { %>
-            <div class="col-md-3 col-sm-6">
-                <div class="thumbnail">
-                    <img src="<%= campground.image %>" alt="campground_image">
-                    <div class="caption">
-                        <h4><%= campground.name %></h4>
-                    </div>
-                    <p>
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card">
+                    <img src="<%= campground.image %>" class="card-img-top" alt="<%= campground.name %>">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= campground.name %></h5>
                         <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">More Info</a>
-                    </p>
+                    </div>
                 </div>
             </div>
         <% }) %>
