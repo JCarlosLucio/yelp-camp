@@ -1,24 +1,16 @@
 <%- include ('../partials/header') %>
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-3">
-            <p class="lead">Yelp Camp</p>
-            <div class="list-group">
-                <li class="list-group-item active">Info 1</li>
-                <li class="list-group-item">Info 2</li>
-                <li class="list-group-item">Info 3</li>
-            </div>
-            <div id="map"></div>
-        </div>
-        <div class="col-md-9">
-            <div class="thumbnail">
-                <img class="img-responsive" src="<%= campground.image %>" alt="">
-                <div class="caption">
-                    <h4 class="pull-right">$<%= campground.price %>/night</h4>
-                    <h4><a href=""><%= campground.name %></a></h4>
-                    <p><%= campground.description %></p>
-                    <p>
+    <div class="row ">
+        <div class="col-md-8 mb-4">
+            <div class="card">
+                <img src="<%= campground.image %>" class="card-img-top" alt="<%= campground.name %>">
+                <div class="card-body">
+                    <h5 class="float-right">$<%= campground.price %>/night</h5>
+                    <h4 class="card-title mb-0">
+                        <%= campground.name %>
+                    </h4>
+                    <small>
                         <em>
                             Submitted by: 
                             <a href="/users/<%= campground.author.id %>">
@@ -26,40 +18,55 @@
                             </a>
                             , <%= moment(campground.createdAt).fromNow() %>
                         </em>
-                    </p>
-                <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
-                    <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-warning btn-xs">Edit</a>
-                    <form class="delete-form" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
-                        <button class="btn btn-danger btn-xs">Delete</button>
-                    </form>
-                <% } %>
+                    </small>
+                    <hr class="my-2 pb-2">
+                    <p class="card-text"><%= campground.description %></p>
+                    <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
+                        <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-outline-warning btn-sm">Edit</a>
+                        <form class="d-inline" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-outline-danger btn-sm">Delete</button>
+                        </form>
+                    <% } %>
                 </div>
             </div>
-            <div class="well">
-                <div class="text-right">
-                        <a class="btn btn-success"href="/campgrounds/<%= campground._id %>/comments/new">Leave a Review</a>
+            <div class="my-3 p-3 rounded shadow-sm card">
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <h6 class="pb-2 mb-0">
+                        Comments
+                    </h6>
+                    <a class="btn btn-success btn-sm"href="/campgrounds/<%= campground._id %>/comments/new">Leave a Review</a>
                 </div>
-                <hr>
+                <hr class="my-2 pb-1">
                 <% campground.comments.forEach((comment) => { %>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <strong><%= comment.author.username %></strong>
-                            <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
-                            <p>
-                                <%= comment.text %>
-                            </p>
-                        <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
-                            <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" 
-                                class="btn btn-warning btn-xs">
-                                Edit
-                            </a>
-                            <form class="delete-form" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-                                <button class="btn btn-danger btn-xs">Delete</button>
-                            </form>
-                        <% } %>
-                        </div>
+                    <div class="media text-muted pt-1 border-bottom">
+                        <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                        <p class="media-body pb-2 small mb-0 lh-125">
+                            <strong class="d-block"><%= comment.author.username %></strong>
+                            <%= comment.text %>
+                        </p>
+                        <small class="d-block text-right mt-0">
+                            <p class="pb-1 mb-2 lh-125 "><%= moment(comment.createdAt).fromNow() %></p>
+                            <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
+                                    <a  href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-warning btn-sm my-1">
+                                        Edit
+                                    </a>
+                                    <form class="mb-1" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                                        <button class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                            <% } %>
+                        </small>
                     </div>
                 <% }); %>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div id="map"></div>
+                <div class="card-body pb-2">
+                    <h6>Location</h6>
+                    <hr class="my-1">
+                    <small><%= campground.location %></small>
+                </div>
             </div>
         </div>
     </div>
@@ -95,7 +102,7 @@
 
   <!-- When deploying to Heroku changing restrictions to APIS will be needed http://webdev.slides.com/nax3t/yelpcamp-refactor-google-maps#/10-->
   <!-- Also MAPS_API_KEY in this file (script below) might need to be replaced with the actual key after restrictions have been updated -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.MAPS_API_KEY %>&callback=initMap"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.MISSING_KEY %>&callback=initMap"></script>
   
   <!-- FOR GEOCODER_API_KEY and ...maybe MAPS_API_KEY-->
   <!-- Export key to Heroku using http://webdev.slides.com/nax3t/yelpcamp-refactor-google-maps#/14 -->
