@@ -17,17 +17,13 @@ hr {
     border-top: 1px solid #ffffff
 }
 
+body, a {
+    color: white;
+}
+
 .text-muted {
     color: white !important;
     margin: 0.5rem 0;
-}
-
-.jumbotron, .navbar, .card, .well, .list-group-item {
-    background-color: rgba(0, 0, 0, 0.7);
-}
-
-.delete-form {
-    display: inline;
 }
 
 .custom-signup{
@@ -51,16 +47,17 @@ hr {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-.navbar-brand:hover, a:hover {
-    color: rgb(63, 252, 120);
+.jumbotron, .navbar, .card {
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
-.navbar-brand, body, h4, p, a {
-    color: white;
+a:hover {
+    color: rgb(63, 252, 120);
 }
 
 /* Google Maps */
 #map {
-    height: 400px;
+    min-height: 400px;
+    height: 30%;
     width: 100%;
 }
