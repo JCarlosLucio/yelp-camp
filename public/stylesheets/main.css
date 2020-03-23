@@ -25,7 +25,10 @@ body, a {
     color: white !important;
     margin: 0.5rem 0;
 }
-
+.comment-avatar {
+    width: 3rem;
+    margin: 0 0.5rem 0.3rem 0;
+}
 .custom-signup{
     width: 70%; 
     margin: 1rem auto;
