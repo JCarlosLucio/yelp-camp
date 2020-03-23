@@ -39,7 +39,7 @@
                 <hr class="my-2 pb-1">
                 <% campground.comments.forEach((comment) => { %>
                     <div class="media text-muted pt-1 border-bottom">
-                        <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                        <img src="<%= comment.author.avatar %>" class="comment-avatar card" alt="avatar">
                         <p class="media-body pb-2 small mb-0 lh-125">
                             <strong class="d-block"><%= comment.author.username %></strong>
                             <%= comment.text %>
