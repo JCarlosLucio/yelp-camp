@@ -59,13 +59,13 @@ router.post('/login', passport.authenticate('local',
         successRedirect: '/campgrounds',
         failureRedirect: '/login',
         failureFlash: true,
-        successFlash: 'Welcome to YelpCamp!'
+        successFlash: 'Welcome back!'
     }
 ), (req, res) => { });
 // LOGOUT 
 router.get('/logout', (req, res) => {
     req.logout();
-    req.flash('success', 'Logged you out!');
+    req.flash('success', 'See you soon!');
     res.redirect('/campgrounds');
 });
 
