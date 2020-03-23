@@ -6,10 +6,10 @@
             <div class="card">
                 <img src="<%= user.avatar %>" class="card-img-top" alt="user profile image">
                 <div class="card-body">
-                    <h4 class="card-title"><%= user.firstName + ' ' + user.lastName %></h4>
+                    <h4 class="card-title"><i class="fas fa-user-circle"></i> <%= user.firstName + ' ' + user.lastName %></h4>
                     <hr class="mb-4">
                     <div class="card-text">
-                        <p>Mail to:<a href="<%= user.email %>"> <%= user.email %></a></p>
+                        <p><i class="fas fa-envelope"></i><a href="<%= user.email %>"> <%= user.email %></a></p>
                     </div>
                 </div>
             </div>
@@ -18,7 +18,11 @@
             <div class="container">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <h1><%= user.username %>'s campgrounds</h1>
+                        <h1 class="text-center">
+                            <i class="fas fa-campground"></i>
+                            <%= user.username %>'s campgrounds 
+                            <i class="fas fa-campground"></i>
+                        </h1>
                         <hr class="my-4">
                     </div>
                 </div>
