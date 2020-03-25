@@ -82,12 +82,12 @@
                             <p class="pb-2 small mb-0 lh-125"><%= comment.text %></p>
                             <!-- Show Edit/Delete Buttons for Comment if user is author-->
                             <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
-                                <form class="d-inline" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-                                    <button class="btn btn-outline-danger btn-sm my-1 px-1 py-0 float-right">Delete</button>
-                                </form>
-                                <a class="btn btn-outline-warning btn-sm px-1 m-1 py-0 float-right" role="button" data-toggle="collapse" href="#collapseEdit<%= comment._id %>" aria-expanded="false" aria-controls="collapse<%= comment._id %>">
+                                <a class="btn btn-outline-warning btn-sm px-1 m-1 py-0" role="button" data-toggle="collapse" href="#collapseEdit<%= comment._id %>" aria-expanded="false" aria-controls="collapse<%= comment._id %>">
                                     Edit
                                 </a>
+                                <form class="d-inline" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                                    <button class="btn btn-outline-danger btn-sm my-1 px-1 py-0">Delete</button>
+                                </form>
                             <% } %>
                             <!-- Collapse Edit comment form START-->
                             <div class="collapse" id="collapseEdit<%= comment._id %>">
