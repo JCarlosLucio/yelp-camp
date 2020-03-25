@@ -46,7 +46,7 @@
                 </div>
                 <!-- Collapse Add comment form START-->
                 <div class="collapse" id="collapseComment">
-                    <div class="my-0 p-3 shadow-sm">
+                    <div class="my-0 p-3">
                         <% if(!currentUser) { %>
                             <!-- If the user is not logged in, direct him to the login page -->
                             <p>You need to login before you can comment. <a href="/login">Click here</a> to go to the login page.</p>
@@ -72,28 +72,26 @@
                 <% } %>
                 <!-- Display comments by looping  -->
                 <% campground.comments.forEach((comment) => { %>
-                    <div class="media text-muted border-bottom">
-                        <div class="col-md-1 p-0">
-                            <img src="<%= comment.author.avatar %>" class="comment-avatar card" alt="avatar">
-                        </div>
-                        <div class="col-md-11 p-0 media-body">
-                            <div class="pb-2 mb-0 lh-125 justify-content-betweens">
+                    <div class="media border-bottom">
+                        <img src="<%= comment.author.avatar %>" class="comment-avatar mr-3" alt="avatar">
+                        <div class="media-body p-0">
+                            <div class="pb-0 pt-2 mb-0 lh-125">
                                 <strong><%= comment.author.username %></strong>
                                 <small class="float-right lh-125"><%= moment(comment.createdAt).fromNow() %></small>
                             </div>
                             <p class="pb-2 small mb-0 lh-125"><%= comment.text %></p>
                             <!-- Show Edit/Delete Buttons for Comment if user is author-->
                             <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
-                                <a class="btn btn-warning btn-sm my-1" role="button" data-toggle="collapse" href="#collapseEdit<%= comment._id %>" aria-expanded="false" aria-controls="collapse<%= comment._id %>">
+                                <form class="d-inline" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                                    <button class="btn btn-outline-danger btn-sm my-1 px-1 py-0 float-right">Delete</button>
+                                </form>
+                                <a class="btn btn-outline-warning btn-sm px-1 m-1 py-0 float-right" role="button" data-toggle="collapse" href="#collapseEdit<%= comment._id %>" aria-expanded="false" aria-controls="collapse<%= comment._id %>">
                                     Edit
                                 </a>
-                                <form class="d-inline" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-                                    <button class="btn btn-danger btn-sm">Delete</button>
-                                </form>
                             <% } %>
                             <!-- Collapse Edit comment form START-->
                             <div class="collapse" id="collapseEdit<%= comment._id %>">
-                                <div class="my-0 py-3 shadow-sm">
+                                <div class="my-0 py-3">
                                     <form id="edit-comment-form<%= comment._id %>" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
                                         <div class="form-group">
                                             <label for="edit-comment">Edit your comment <i class="fas fa-edit"></i></label>
