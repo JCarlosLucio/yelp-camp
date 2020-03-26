@@ -21,6 +21,28 @@ body, a {
     color: white;
 }
 
+.small-star {
+    font-size: 0.6rem;
+}
+
+.fa-star {
+    color: rgb(56, 56, 17);
+}
+
+.yellow-shadow {
+    text-shadow: 0 0 10px yellow;
+}
+
+.yellow {
+    color: yellow;
+}
+
+.star-btn {
+    background: none;
+    border: none;
+    padding: 0;
+}
+
 .text-muted {
     color: white !important;
     margin: 0.5rem 0;
