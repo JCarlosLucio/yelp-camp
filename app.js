@@ -16,6 +16,7 @@ const express = require('express'),
 // ROUTES require
 const campgroundRoutes = require('./routes/campgrounds'),
     commentRoutes = require('./routes/comments'),
+    reviewRoutes = require('./routes/reviews'),
     indexRoutes = require('./routes/index');
 
 //DB CONNECT W/MONGOOSE
@@ -68,7 +69,6 @@ app.use((req, res, next) => {
     res.locals.error = req.flash('error');
     res.locals.success = req.flash('success');
     next();
-
 });
 
 //ROUTES
@@ -79,6 +79,7 @@ app.use('/campgrounds', campgroundRoutes);
 // when using :id or similar use {mergeParams: true} on router  when requiring it in the route file
 app.use('/campgrounds/:id/comments', commentRoutes);
 // in this case index doesn't take the first argument since all of its routes start differently
+app.use('/campgrounds/:id/reviews', reviewRoutes);
 app.use(indexRoutes);
 
 //SERVER
