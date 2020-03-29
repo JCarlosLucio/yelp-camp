@@ -54,14 +54,6 @@
                         Reviews
                         <i class="fab fa-microblog"></i>
                     </h5>
-                    <!-- Check if theres a rating, if there isn't then say "No reviews yet" -->
-                    <% if (campground.reviews.length === 0) { %>
-                    <small class="mb-1">
-                        <em class="small"> - No reviews yet.</em>
-                        <% } else { %>
-                        <em class="small"> - Total reviews: <%= campground.reviews.length %></em>
-                        <% } %>
-                    </small>
                     <a class="btn btn-success btn-sm float-right" role="button" data-toggle="collapse"
                         href="#collapseReview" aria-expanded="false" aria-controls="collapseReview">
                         <i class="fas fa-plus"></i>
@@ -118,101 +110,105 @@
                 </div>
                 <!-- Collapse Add Review form END -->
                 <hr class="my-2">
-                <!-- Display reviews by looping  -->
-                <% campground.reviews.slice(0, 5).forEach((review) => { %>
-                <div class="media border-bottom">
-                    <img src="<%= review.author.avatar %>" class="comment-avatar mr-3" alt="review-avatar">
-                    <div class="media-body p-0">
-                        <div class="pb-0 pt-2 mb-0 lh-125">
-                            <strong><%= review.author.username %></strong>
-                            <% if (review.rating === 0) { %>
-                            <p class="d-inline">
-                                <small><em> - No reviews yet.</em></small>
-                                <% } else { %>
-                                <div class="d-inline px-2">
-                                    <i class="small-star fas fa-star yellow yellow-shadow"></i>
-                                    <i
-                                        class="small-star fas fa-star <% if (review.rating > 1.5) { %> yellow yellow-shadow <% } %>"></i>
-                                    <i
-                                        class="small-star fas fa-star <% if (review.rating > 2.5) { %> yellow yellow-shadow <% } %>"></i>
-                                    <i
-                                        class="small-star fas fa-star <% if (review.rating > 3.5) { %> yellow yellow-shadow <% } %>"></i>
-                                    <i
-                                        class="small-star fas fa-star <% if (review.rating > 4.5) { %> yellow yellow-shadow <% } %>"></i>
+                <!-- Check if theres a rating, if there isn't then say "No reviews yet" -->
+                <% if (campground.reviews.length === 0) { %>
+                    <em>No reviews yet.</em>
+                <% } else { %>
+                    <!-- Display reviews by looping, if reviews exist -->
+                    <% campground.reviews.slice(0, 5).forEach((review) => { %>
+                        <div class="media border-bottom">
+                            <img src="<%= review.author.avatar %>" class="comment-avatar mr-3" alt="review-avatar">
+                            <div class="media-body p-0">
+                                <div class="pb-0 pt-2 mb-0 lh-125">
+                                    <strong><%= review.author.username %></strong>
+                                    <div class="d-inline px-2">
+                                        <i class="small-star fas fa-star yellow yellow-shadow"></i>
+                                        <i
+                                            class="small-star fas fa-star <% if (review.rating > 1.5) { %> yellow yellow-shadow <% } %>"></i>
+                                        <i
+                                            class="small-star fas fa-star <% if (review.rating > 2.5) { %> yellow yellow-shadow <% } %>"></i>
+                                        <i
+                                            class="small-star fas fa-star <% if (review.rating > 3.5) { %> yellow yellow-shadow <% } %>"></i>
+                                        <i
+                                            class="small-star fas fa-star <% if (review.rating > 4.5) { %> yellow yellow-shadow <% } %>"></i>
+                                    </div>
+                                    <small class="float-right lh-125"><%= moment(review.updatedAt).fromNow() %></small>
+                                    <p class="pb-2 small mb-0 lh-125"><%= review.text %></p>
                                 </div>
-                                <% } %>
-                                <small class="float-right lh-125"><%= moment(review.updatedAt).fromNow() %></small>
-                        </div>
-                        <p class="pb-2 small mb-0 lh-125"><%= review.text %></p>
-                        <!-- START OF SHOW IF USER IS AUTHOR OF REVIEW  -->
-                        <!-- Show Edit/Delete Buttons for Review if user is author-->
-                        <% if(currentUser && review.author.id.equals(currentUser._id)) { %>
-                        <a class="btn btn-outline-warning btn-sm px-1 m-1 py-0" role="button" data-toggle="collapse"
-                            href="#collapseEdit<%= review._id %>" aria-expanded="false"
-                            aria-controls="collapse<%= review._id %>">
-                            Edit
-                        </a>
-                        <form class="d-inline"
-                            action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE"
-                            method="POST">
-                            <button class="btn btn-outline-danger btn-sm my-1 px-1 py-0">Delete</button>
-                        </form>
-                        <!-- SHOW EDIT COLLAPSE ONLY IF USER IS AUTHOR OF REVIEW -->
-                        <!-- Collapse Edit Review form START -ONLY SHOWN IF USER IS AUTHOR OF REVIEW-->
-                        <div class="collapse" id="collapseEdit<%= review._id %>">
-                            <div class="my-0 py-3">
-                                <form id="edit-review-form<%= review._id %>"
-                                    action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=PUT"
+                                <!-- START OF SHOW IF USER IS AUTHOR OF REVIEW  -->
+                                <!-- Show Edit/Delete Buttons for Review if user is author-->
+                                <% if(currentUser && review.author.id.equals(currentUser._id)) { %>
+                                <a class="btn btn-outline-warning btn-sm px-1 m-1 py-0" role="button" data-toggle="collapse"
+                                    href="#collapseEdit<%= review._id %>" aria-expanded="false"
+                                    aria-controls="collapse<%= review._id %>">
+                                    Edit
+                                </a>
+                                <form class="d-inline"
+                                    action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE"
                                     method="POST">
-                                    <!-- EDIT STARS GROUP START-->
-                                    <div class="form-group">
-                                        <label for="rating-select-edit<%= review._id %>">Edit Rating</label>
-                                        <!-- The Star buttons assign a value to the hidden input -->
-                                        <div class="btn-group d-inline px-2" id="rating-select-edit<%= review._id %>">
-                                            <button class="star-btn" type="button">
-                                                <i class="star-select-edit fas fa-star yellow yellow-shadow"
-                                                    id="oneEdit"></i>
-                                            </button>
-                                            <button class="star-btn" type="button">
-                                                <i class="star-select-edit fas fa-star <% if (review.rating > 1.5) { %> yellow yellow-shadow <% } %>"
-                                                    id="twoEdit"></i>
-                                            </button>
-                                            <button class="star-btn" type="button">
-                                                <i class="star-select-edit fas fa-star <% if (review.rating > 2.5) { %> yellow yellow-shadow <% } %>"
-                                                    id="threeEdit"></i>
-                                            </button>
-                                            <button class="star-btn" type="button">
-                                                <i class="star-select-edit fas fa-star <% if (review.rating > 3.5) { %> yellow yellow-shadow <% } %>"
-                                                    id="fourEdit"></i>
-                                            </button>
-                                            <button class="star-btn" type="button">
-                                                <i class="star-select-edit fas fa-star <% if (review.rating > 4.5) { %> yellow yellow-shadow <% } %>"
-                                                    id="fiveEdit"></i>
-                                            </button>
-                                        </div>
-                                        <!-- The hidden input passes the value of the rating -->
-                                        <input id="hiddenEdit" type="hidden" name="review[rating]" type="hidden"
-                                            value="<%= review.rating %>">
-                                    </div>
-                                    <!-- EDIT STARS GROUP END -->
-                                    <div class="form-group">
-                                        <label for="edit-review">Edit your Review <i class="fas fa-edit"></i></label>
-                                        <textarea required class="form-control" form="edit-review-form<%= review._id %>"
-                                            id="edit-review" name="review[text]" cols="70" rows="2"
-                                            placeholder="Your review..."><%= review.text %></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="btn btn-sm btn-primary btn-block">Edit Review</button>
-                                    </div>
+                                    <button class="btn btn-outline-danger btn-sm my-1 px-1 py-0">Delete</button>
                                 </form>
+                                <!-- SHOW EDIT COLLAPSE ONLY IF USER IS AUTHOR OF REVIEW -->
+                                <!-- Collapse Edit Review form START -ONLY SHOWN IF USER IS AUTHOR OF REVIEW-->
+                                <div class="collapse" id="collapseEdit<%= review._id %>">
+                                    <div class="my-0 py-3">
+                                        <form id="edit-review-form<%= review._id %>"
+                                            action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=PUT"
+                                            method="POST">
+                                            <!-- EDIT STARS GROUP START-->
+                                            <div class="form-group">
+                                                <label for="rating-select-edit<%= review._id %>">Edit Rating</label>
+                                                <!-- The Star buttons assign a value to the hidden input -->
+                                                <div class="btn-group d-inline px-2" id="rating-select-edit<%= review._id %>">
+                                                    <button class="star-btn" type="button">
+                                                        <i class="star-select-edit fas fa-star yellow yellow-shadow"
+                                                            id="oneEdit"></i>
+                                                    </button>
+                                                    <button class="star-btn" type="button">
+                                                        <i class="star-select-edit fas fa-star <% if (review.rating > 1.5) { %> yellow yellow-shadow <% } %>"
+                                                            id="twoEdit"></i>
+                                                    </button>
+                                                    <button class="star-btn" type="button">
+                                                        <i class="star-select-edit fas fa-star <% if (review.rating > 2.5) { %> yellow yellow-shadow <% } %>"
+                                                            id="threeEdit"></i>
+                                                    </button>
+                                                    <button class="star-btn" type="button">
+                                                        <i class="star-select-edit fas fa-star <% if (review.rating > 3.5) { %> yellow yellow-shadow <% } %>"
+                                                            id="fourEdit"></i>
+                                                    </button>
+                                                    <button class="star-btn" type="button">
+                                                        <i class="star-select-edit fas fa-star <% if (review.rating > 4.5) { %> yellow yellow-shadow <% } %>"
+                                                            id="fiveEdit"></i>
+                                                    </button>
+                                                </div>
+                                                <!-- The hidden input passes the value of the rating -->
+                                                <input id="hiddenEdit" type="hidden" name="review[rating]" type="hidden"
+                                                    value="<%= review.rating %>">
+                                            </div>
+                                            <!-- EDIT STARS GROUP END -->
+                                            <div class="form-group">
+                                                <label for="edit-review">Edit your Review <i class="fas fa-edit"></i></label>
+                                                <textarea required class="form-control" form="edit-review-form<%= review._id %>"
+                                                    id="edit-review" name="review[text]" cols="70" rows="2"
+                                                    placeholder="Your review..."><%= review.text %></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn btn-sm btn-primary btn-block">Edit Review</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- Collapse Edit Review form END-->
+                                <% } %>
+                                <!-- END OF SHOW IF USER IS AUTHOR OF REVIEW -->
                             </div>
                         </div>
-                        <!-- Collapse Edit Review form END-->
-                        <% } %>
-                        <!-- END OF SHOW IF USER IS AUTHOR OF REVIEW -->
-                    </div>
-                </div>
-                <% }); %>
+                    <% }); %>
+                <p class="pt-3 m-0">
+                    <em>Total reviews: <%= campground.reviews.length %></em>
+                    <a class="float-right" href="/campgrounds/<%= campground._id %>/reviews"><i class="far fa-eye"></i> View all reviews</a>
+                </p>
+                <% } %>
             </div>
         </div>
         <!-- LOCATION/MAP SECTION -->
@@ -232,10 +228,9 @@
                         Comments
                         <i class="fas fa-comments"></i>
                     </h6>
-                    <a class="btn btn-success btn-sm" role="button" data-toggle="collapse" href="#collapseComment"
+                    <a class="btn btn-success btn-sm mx-1" role="button" data-toggle="collapse" href="#collapseComment"
                         aria-expanded="false" aria-controls="collapseComment">
                         <i class="fas fa-plus"></i>
-                        Add New Comment
                     </a>
                 </div>
                 <!-- Collapse Add comment form START-->
