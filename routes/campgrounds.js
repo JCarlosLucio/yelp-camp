@@ -117,7 +117,11 @@ router.get('/new', middleware.isLoggedIn, (req, res) => {
 // SHOW - Shows more info about one campground
 router.get('/:id', (req, res) => {
     // find the campground with provided ID
-    Campground.findById(req.params.id).populate('comments').populate({
+    Campground.findById(req.params.id).populate({
+        path: 'comments',
+        // sorts them starting with the newest
+        options: { sort: { createdAt: -1 } }
+    }).populate({
         path: 'reviews',
         options: { sort: { createdAt: -1 } }
     }).exec((err, foundCampground) => {
