@@ -60,6 +60,7 @@ starsSelectAdd.forEach((starAdd) => {
                 threeStar.classList.add('yellow');
                 fourStar.classList.add('yellow');
                 hiddenInput.attributes.value.value = 4;
+                break;
             case 'five':
                 oneStar.classList.add('yellow');
                 twoStar.classList.add('yellow');
@@ -96,6 +97,7 @@ starsSelectAdd.forEach((starAdd) => {
                 twoStar.classList.add('yellow-shadow');
                 threeStar.classList.add('yellow-shadow');
                 fourStar.classList.add('yellow-shadow');
+                break;
             case 'five':
                 oneStar.classList.add('yellow-shadow');
                 twoStar.classList.add('yellow-shadow');
