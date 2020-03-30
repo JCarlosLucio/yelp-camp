@@ -16,15 +16,13 @@
         </div>
         <div class="col-md-8">
             <div class="container">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h1 class="text-center">
-                            <i class="fas fa-campground"></i>
-                            <%= user.username %>'s campgrounds 
-                            <i class="fas fa-campground"></i>
-                        </h1>
-                        <hr class="my-4">
-                    </div>
+                <div class="card-body my-4">
+                    <h1 class="text-center">
+                        <i class="fas fa-campground"></i>
+                        <%= user.username %>'s campgrounds 
+                        <i class="fas fa-campground"></i>
+                    </h1>
+                    <hr class="my-4">
                 </div>
                 <div class="row">
                     <% campgrounds.forEach((campground) => { %>
