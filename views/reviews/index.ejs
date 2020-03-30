@@ -1,0 +1,45 @@
+<%- include ('../partials/header') %>
+
+<div class="container">
+    <div class="row">
+        <div class="card">
+            <div class="p-3">
+                <h3 class="pb-2 mb-0 text-center">
+                    <i class="fab fa-microblog"></i>
+                    Reviews for <a href="/campgrounds/<%= campground._id %>">"<%= campground.name %>"</a>
+                </h3>
+            </div>
+        </div>
+        <div class="my-3 p-3 card">
+            <% campground.reviews.forEach((review) => { %>
+            <div class="media border-bottom">
+                <img src="<%= review.author.avatar %>" class="comment-avatar mr-3" alt="review-avatar">
+                <div class="media-body p-0">
+                    <div class="pb-0 pt-2 mb-0 lh-125">
+                        <strong><%= review.author.username %></strong>
+                        <div class="d-inline px-2">
+                            <i class="small-star fas fa-star yellow yellow-shadow"></i>
+                            <i
+                                class="small-star fas fa-star <% if (review.rating > 1.5) { %> yellow yellow-shadow <% } %>"></i>
+                            <i
+                                class="small-star fas fa-star <% if (review.rating > 2.5) { %> yellow yellow-shadow <% } %>"></i>
+                            <i
+                                class="small-star fas fa-star <% if (review.rating > 3.5) { %> yellow yellow-shadow <% } %>"></i>
+                            <i
+                                class="small-star fas fa-star <% if (review.rating > 4.5) { %> yellow yellow-shadow <% } %>"></i>
+                        </div>
+                        <small class="float-right lh-125"><%= moment(review.updatedAt).fromNow() %></small>
+                        <p class="pb-2 small mb-0 lh-125"><%= review.text %></p>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+            <p class="pt-3 m-0">
+                <a href="/campgrounds/<%= campground._id %>">Back to campground</a>
+            </p>
+        </div>
+    </div>
+</div>
+</div>
+
+<%- include ('../partials/footer') %>
