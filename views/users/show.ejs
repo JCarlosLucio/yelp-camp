@@ -43,6 +43,38 @@
                     <% }); %>
                 </div>
             </div>
+            <div class="container my-4">
+                <div class="card-body">
+                    <h1 class="text-center">
+                        <%= user.username %>'s Reviews 
+                    </h1>
+                    <hr class="my-4">
+                </div>
+                <div class="card my-3 p-3">
+                    <% reviews.forEach((review) => { %>
+                    <div class="media border-bottom">
+                        <div class="media-body p-0">
+                            <div class="pb-0 pt-2 mb-0 lh-125">
+                                <strong>Review for <%= review.campground.name %></strong>
+                                <small class="float-right lh-125"><%= moment(review.updatedAt).fromNow() %></small>
+                                <div class="d-block pb-2">
+                                    <i class="small-star fas fa-star yellow yellow-shadow"></i>
+                                    <i
+                                        class="small-star fas fa-star <% if (review.rating > 1.5) { %> yellow yellow-shadow <% } %>"></i>
+                                    <i
+                                        class="small-star fas fa-star <% if (review.rating > 2.5) { %> yellow yellow-shadow <% } %>"></i>
+                                    <i
+                                        class="small-star fas fa-star <% if (review.rating > 3.5) { %> yellow yellow-shadow <% } %>"></i>
+                                    <i
+                                        class="small-star fas fa-star <% if (review.rating > 4.5) { %> yellow yellow-shadow <% } %>"></i>
+                                </div>
+                                <p class="pb-2 mb-0 lh-125"><%= review.text %></p>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
         </div>
     </div>
 </div>
