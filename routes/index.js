@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const User = require('../models/user');
 const Campground = require('../models/campground');
+const Review = require('../models/review');
 const async = require('async');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
@@ -219,7 +220,15 @@ router.get('/users/:id', (req, res) => {
                 req.flash('error', 'Something went wrong');
                 return res.redirect('/campgrounds');
             }
-            res.render('users/show', { user: foundUser, campgrounds: campgrounds });
+            // res.render('users/show', { user: foundUser, campgrounds: campgrounds });
+            // A way of passing info for user to use
+                Review.find().where('author.id').equals(foundUser._id).exec(function (err, reviews) {
+                    if(err){
+                        req.flash('error', err.message);
+                        return res.redirect('/campgrounds')
+                    }
+                    res.render('users/show', { user: foundUser, campgrounds: campgrounds, reviews: reviews });
+                });
         });
     });
 });
