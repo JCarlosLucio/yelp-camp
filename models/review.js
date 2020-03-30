@@ -33,9 +33,12 @@ const reviewSchema = new mongoose.Schema({
     },
     // campground associated with the review
     campground: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Campground"
-    }
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Campground"
+        },
+        name: String
+    },
 }, {
     // if timestamps are set to true, mongoose assigns createdAt and updatedAt fields to your schema, the type assigned is Date.
     timestamps: true
