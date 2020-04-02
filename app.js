@@ -19,14 +19,23 @@ const campgroundRoutes = require('./routes/campgrounds'),
     reviewRoutes = require('./routes/reviews'),
     indexRoutes = require('./routes/index');
 
-//DB CONNECT W/MONGOOSE
-mongoose.set('useCreateIndex', true); // When using {unique: true} on models 
-mongoose.set('useUnifiedTopology', true);
-mongoose.set('useFindAndModify', false);
-mongoose.connect('mongodb://localhost:27017/yelp_camp', { useNewUrlParser: true })
-    .catch((err) => {
-        console.error('CONNECTION ERROR: ', err);
-    });
+// DB CONNECT W/MONGOOSE
+// LOCAL DB - 'mongodb://localhost:27017/yelp_camp'
+// DEPLOYMENT DB EXAMPLE - 'mongodb+srv://<user>:<password>@<cluster>-r1vdx.mongodb.net/test?retryWrites=true&w=majority'
+// mongoose.set('useCreateIndex', true);  // When using {unique: true} on models
+// mongoose.set('useUnifiedTopology', true);
+// mongoose.set('useFindAndModify', false);
+// moved mongoose.set from above to the mongoose.connect below
+mongoose.connect(process.env.DATABASE_URL, { 
+    useNewUrlParser: true,
+    useCreateIndex: true, // When using {unique: true} on models 
+    useUnifiedTopology: true,
+    useFindAndModify: false
+}).then(() => {
+    console.log('Connected to DB!');
+}).catch((err) => {
+    console.log('CONNECTION ERROR: ', err.message);
+});
 // BODY PARSER
 // used to pass info (i.e. req.body.name)
 app.use(bodyParser.urlencoded({ extended: true }));
