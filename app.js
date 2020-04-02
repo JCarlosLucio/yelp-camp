@@ -92,6 +92,6 @@ app.use('/campgrounds/:id/reviews', reviewRoutes);
 app.use(indexRoutes);
 
 //SERVER
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log('Started yelp-camp server');
 });
