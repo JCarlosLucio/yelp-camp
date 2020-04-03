@@ -22,11 +22,12 @@ const campgroundRoutes = require('./routes/campgrounds'),
 // DB CONNECT W/MONGOOSE
 // LOCAL DB - 'mongodb://localhost:27017/yelp_camp'
 // DEPLOYMENT DB EXAMPLE - 'mongodb+srv://<user>:<password>@<cluster>-r1vdx.mongodb.net/test?retryWrites=true&w=majority'
+const databaseUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/yelp_camp';
 // mongoose.set('useCreateIndex', true);  // When using {unique: true} on models
 // mongoose.set('useUnifiedTopology', true);
 // mongoose.set('useFindAndModify', false);
 // moved mongoose.set from above to the mongoose.connect below
-mongoose.connect(process.env.DATABASE_URL, { 
+mongoose.connect(databaseUri, { 
     useNewUrlParser: true,
     useCreateIndex: true, // When using {unique: true} on models 
     useUnifiedTopology: true,
