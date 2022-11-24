@@ -22,6 +22,10 @@ Add `MONGODB_URI`, `GEOCODER_API_KEY`, `MAPS_API_KEY`, `SESSION_SECRET`,
 
 Runs the app.
 
+### `npm run dev`
+
+Runs the app in development mode.
+
 ## Deployment 🚀
 
 Deployment with [Render](https://render.com/).  
