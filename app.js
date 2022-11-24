@@ -26,13 +26,8 @@ const databaseUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/yelp_c
 // mongoose.set('useCreateIndex', true);  // When using {unique: true} on models
 // mongoose.set('useUnifiedTopology', true);
 // mongoose.set('useFindAndModify', false);
-// moved mongoose.set from above to the mongoose.connect below
-mongoose.connect(databaseUri, { 
-    useNewUrlParser: true,
-    useCreateIndex: true, // When using {unique: true} on models 
-    useUnifiedTopology: true,
-    useFindAndModify: false
-}).then(() => {
+// Mongoose 6 always behaves as if useNewUrlParser, useUnifiedTopology, and useCreateIndex are true, and useFindAndModify is false
+mongoose.connect(databaseUri).then(() => {
     console.log('Connected to DB!');
 }).catch((err) => {
     console.log('CONNECTION ERROR: ', err.message);
